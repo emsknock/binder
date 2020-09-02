@@ -36,4 +36,10 @@ export class FixedArray<T> {
         this._array[i] = v;
     }
 
+    public *[Symbol.iterator]() {
+        for(let i = 0; i < this._size; i++) {
+            yield this._array[i];
+        }
+    }
+
 }
