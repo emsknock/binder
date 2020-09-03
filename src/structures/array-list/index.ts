@@ -16,8 +16,6 @@ export class ArrayList<T> {
 
     public getHead = () => ({ value: this._array.get(0), index: 0 });
     public getTail = () => ({ value: this._array.get(this.tailIdx()), index: this.tailIdx() });
-    public setHead = (v: T) => this._array.set(0, v);
-    public setTail = (v: T) => this._array.set(this.tailIdx(), v);
     
     public popTail = () => {
         this._size--;
