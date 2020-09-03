@@ -40,7 +40,7 @@ export class PriorityQueue<T> {
 
         let nodeIdx = 0;
         while (true) {
-            
+
             const { priority } = list.get(nodeIdx);
             const rChild = this.rChildOf(nodeIdx);
             const lChild = this.lChildOf(nodeIdx);
@@ -49,7 +49,7 @@ export class PriorityQueue<T> {
                 ? rChild
                 : lChild;
 
-            if(maxChild.priority > priority) {
+            if (maxChild.priority > priority) {
                 list.swapByIndex(nodeIdx, maxChild.index);
                 nodeIdx = maxChild.index;
             } else {
