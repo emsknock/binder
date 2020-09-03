@@ -1,4 +1,4 @@
-import { ArrayList } from "./array-list";
+import { ArrayList } from "structures/array-list";
 
 export class PriorityQueue<T> {
 
