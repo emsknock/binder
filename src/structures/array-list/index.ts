@@ -48,6 +48,9 @@ export class ArrayList<T> {
 
     public remove(i: number) {
 
+        if (!this.isInBounds(i))
+            throw ReferenceError(`Index out of bounds for List size ${this._size}: ${i}`);
+
         for (let j = i + 1; j < this._array.size(); j++)
             this._array.set(j - 1, this._array.get(j));
 
