@@ -36,6 +36,11 @@ export class FixedArray<T> {
         this._array[i] = v;
     }
 
+    /**
+     * Implement the iteration protocol.
+     * This allows an instance of this class to be iterated over using `for of`
+     * or the javascript spread operator `...`
+     */
     public *[Symbol.iterator]() {
         for (let i = 0; i < this._size; i++) {
             yield this._array[i];
