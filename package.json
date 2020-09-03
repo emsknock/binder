@@ -15,5 +15,8 @@
     "bugs": {
         "url": "https://github.com/emsknock/binder/issues"
     },
-    "homepage": "https://github.com/emsknock/binder#readme"
+    "homepage": "https://github.com/emsknock/binder#readme",
+    "devDependencies": {
+        "@tsconfig/node12": "^1.0.7"
+    }
 }
