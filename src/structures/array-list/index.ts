@@ -3,21 +3,21 @@ import { FixedArray } from "structures/fixed-array";
 export class ArrayList<T> {
 
     private _array: FixedArray<T>;
-    private _size: number;
+    private _size = 0;
 
     constructor(initialSize = 256) {
-        this._size = initialSize;
         this._array = new FixedArray(initialSize);
     }
 
     private isInBounds = (i: number) => !(i < 0) && i < this._size;
+    private tailIdx = () => this._size - 1;
 
     public size = () => this._size;
 
     public getHead = () => ({ value: this._array.get(0), index: 0 });
-    public getTail = () => ({ value: this._array.get(this._size - 1), index: this._size - 1 });
+    public getTail = () => ({ value: this._array.get(this.tailIdx()), index: this.tailIdx() });
     public setHead = (v: T) => this._array.set(0, v);
-    public setTail = (v: T) => this._array.set(this._size - 1, v);
+    public setTail = (v: T) => this._array.set(this.tailIdx(), v);
     
     public popTail = () => {
         this._size--;
@@ -38,9 +38,9 @@ export class ArrayList<T> {
 
     public add(v: T) {
 
-        const newIdx = this._size + 1;
+        const newIdx = this._size;
         const arrLen = this._array.size();
-        if (newIdx >= arrLen)
+        if (newIdx === arrLen)
             this._array = this._array.copy(arrLen * 2);
 
         this._array.set(newIdx, v);
