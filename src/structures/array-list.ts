@@ -12,6 +12,11 @@ export class ArrayList<T> {
 
     public isInBounds = (i: number) => !(i < 0) && i < this._size;
 
+    public getHead = () => this._array.get(0);
+    public getTail = () => this._array.get(this._size - 1);
+    public setHead = (v: T) => this._array.set(0, v);
+    public setTail = (v: T) => this._array.set(this._size - 1, v);
+
     public get(i: number) {
         if (!this.isInBounds(i))
             throw ReferenceError(`Index out of bounds for List size ${this._size}: ${i}`);
