@@ -47,4 +47,15 @@ export class FixedArray<T> {
         }
     }
 
+    public copy(size: number) {
+        if (size < this._size)
+            throw RangeError(`Cannot copy array to a smaller size (${size} < ${this._size})`);
+
+        const newArray = new FixedArray<T>(size);
+        for(let i = 0; i < this._size; i++)
+            newArray.set(i, this._array[i]);
+            
+        return newArray;
+    }
+
 }
