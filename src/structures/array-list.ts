@@ -12,8 +12,8 @@ export class ArrayList<T> {
 
     public isInBounds = (i: number) => !(i < 0) && i < this._size;
 
-    public getHead = () => this._array.get(0);
-    public getTail = () => this._array.get(this._size - 1);
+    public getHead = () => ({ value: this._array.get(0), index: 0 });
+    public getTail = () => ({ value: this._array.get(this._size - 1), index: this._size - 1 });
     public setHead = (v: T) => this._array.set(0, v);
     public setTail = (v: T) => this._array.set(this._size - 1, v);
 
@@ -50,7 +50,7 @@ export class ArrayList<T> {
 
     }
 
-    public swap(aIdx: number, bIdx: number) {
+    public swapByIndex(aIdx: number, bIdx: number) {
         const a = this._array.get(aIdx);
         const b = this._array.get(bIdx);
         this._array.set(aIdx, b);
