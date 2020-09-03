@@ -18,6 +18,8 @@ export class ArrayList<T> {
     public getTail = () => ({ value: this._array.get(this.tailIdx()), index: this.tailIdx() });
     
     public popTail = () => {
+        if(this._size < 1)
+            throw ReferenceError(`Cannot pop from an empty array`);
         this._size--;
         return this.getTail().value;
     }
