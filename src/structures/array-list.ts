@@ -40,7 +40,7 @@ export class ArrayList<T> {
         this._size++;
 
     }
-    
+
     public remove(i: number) {
 
         for (let j = i + 1; j < this._array.size(); j++)
