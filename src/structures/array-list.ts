@@ -50,4 +50,11 @@ export class ArrayList<T> {
 
     }
 
+    public swap(aIdx: number, bIdx: number) {
+        const a = this._array.get(aIdx);
+        const b = this._array.get(bIdx);
+        this._array.set(aIdx, b);
+        this._array.set(bIdx, a);
+    }
+
 }
