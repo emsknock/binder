@@ -10,7 +10,7 @@ export class ArrayList<T> {
         this._array = new FixedArray(initialSize);
     }
 
-    public isInBounds = (i: number) => !(i < 0) && i < this._size;
+    private isInBounds = (i: number) => !(i < 0) && i < this._size;
 
     public size = () => this._size;
 
