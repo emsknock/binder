@@ -14,8 +14,16 @@ export class ArrayList<T> {
 
     public size = () => this._size;
 
-    public getHead = () => ({ value: this._array.get(0), index: 0 });
-    public getTail = () => ({ value: this._array.get(this.tailIdx()), index: this.tailIdx() });
+    public getHead = () => {
+        if(this._size < 1)
+            throw ReferenceError(`Cannot get head of an empty array`);
+        return { value: this._array.get(0), index: 0 };
+    }
+    public getTail = () => {
+        if(this._size < 1)
+            throw ReferenceError(`Cannot get tail of an empty array`);
+        return { value: this._array.get(this.tailIdx()), index: this.tailIdx() };
+    };
     
     public popTail = () => {
         if(this._size < 1)
