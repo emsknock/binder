@@ -47,6 +47,13 @@ export class FixedArray<T> {
         }
     }
 
+    /**
+     * Creates a new fixed size array of the given size and copies all this array's elements
+     * to it. Since there must be space for at least all the current elements, the new array
+     * must be larger or equal in size to the one being copied.
+     * 
+     * @param size The size of the new array. Must be greater than or equal to the current size.
+     */
     public copy(size: number) {
         if (size < this._size)
             throw RangeError(`Cannot copy array to a smaller size (${size} < ${this._size})`);
@@ -54,7 +61,7 @@ export class FixedArray<T> {
         const newArray = new FixedArray<T>(size);
         for(let i = 0; i < this._size; i++)
             newArray.set(i, this._array[i]);
-            
+
         return newArray;
     }
 
