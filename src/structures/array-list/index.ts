@@ -59,6 +59,10 @@ export class ArrayList<T> {
     }
 
     public swapByIndex(aIdx: number, bIdx: number) {
+        if (!this.isInBounds(aIdx))
+            throw ReferenceError(`Index out of bounds for List size ${this._size}: ${aIdx}`);
+        if (!this.isInBounds(bIdx))
+            throw ReferenceError(`Index out of bounds for List size ${this._size}: ${bIdx}`);
         const a = this._array.get(aIdx);
         const b = this._array.get(bIdx);
         this._array.set(aIdx, b);
