@@ -16,6 +16,11 @@ export class ArrayList<T> {
     public getTail = () => ({ value: this._array.get(this._size - 1), index: this._size - 1 });
     public setHead = (v: T) => this._array.set(0, v);
     public setTail = (v: T) => this._array.set(this._size - 1, v);
+    
+    public popTail = () => {
+        this._size--;
+        return this.getTail().value;
+    }
 
     public get(i: number) {
         if (!this.isInBounds(i))
