@@ -1,4 +1,4 @@
-import { FixedArray } from "./fixed-array";
+import { FixedArray } from ".";
 
 test("accepts a size", () => {
     const arr = new FixedArray(5);
