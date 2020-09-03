@@ -20,10 +20,10 @@ export class PriorityQueue<T> {
 
         let nodeIdx = list.getTail().index;
         while (true) {
-            const { priority: parentPriority, index: parentIdx } = this.parentOf(nodeIdx);
-            if (priority > parentPriority) {
-                list.swapByIndex(nodeIdx, parentIdx);
-                nodeIdx = parentIdx;
+            const parent = this.parentOf(nodeIdx);
+            if (priority > parent.priority) {
+                list.swapByIndex(nodeIdx, parent.index);
+                nodeIdx = parent.index;
             } else {
                 break;
             }
