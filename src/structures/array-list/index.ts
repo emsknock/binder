@@ -12,6 +12,8 @@ export class ArrayList<T> {
 
     public isInBounds = (i: number) => !(i < 0) && i < this._size;
 
+    public size = () => this._size;
+
     public getHead = () => ({ value: this._array.get(0), index: 0 });
     public getTail = () => ({ value: this._array.get(this._size - 1), index: this._size - 1 });
     public setHead = (v: T) => this._array.set(0, v);
