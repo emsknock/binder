@@ -1,0 +1,19 @@
+{
+    "name": "binder",
+    "version": "0.0.0",
+    "description": "A file compression utility",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/emsknock/binder.git"
+    },
+    "author": "Emma Koskinen",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/emsknock/binder/issues"
+    },
+    "homepage": "https://github.com/emsknock/binder#readme"
+}
