@@ -20,8 +20,9 @@ export class ArrayList<T> {
     public popTail = () => {
         if(this._size < 1)
             throw ReferenceError(`Cannot pop from an empty array`);
+        const tail = this.getTail().value;
         this._size--;
-        return this.getTail().value;
+        return tail;
     }
 
     public get(i: number) {
