@@ -4,7 +4,7 @@
     "description": "A file compression utility",
     "main": "index.js",
     "scripts": {
-        "test": "npx jest"
+        "test": "clear; npx jest"
     },
     "repository": {
         "type": "git",
