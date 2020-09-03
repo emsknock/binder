@@ -5,7 +5,7 @@ Hours worked: 4
 - [x] I have the topic and the programming language decided, both greenlit by Saska.
 - [x] I've created the documentation files, and written the specification file
 - [x] I've enabled issues in the repository
-- [ ] I've added a testing library
+- [x] I've added a testing library
 
 I started the project by deciding an initial project structure: all common data structures will be inside a `/structures` directory, all the files relating to the actual Hamming Code and LZW algorithms will be inside their own `/compressors/hamming` and `/compressors/lzw` directories. The main program logic will be as simple as possible and reside in a `/main.ts` file.
 
