@@ -13,6 +13,8 @@ export class FixedArray<T> {
     private _size: number;
 
     constructor(size: number) {
+        if (size < 1)
+            throw RangeError(`Array size must be at least 1: ${size}`);
         this._size = size;
     }
 
@@ -59,7 +61,7 @@ export class FixedArray<T> {
             throw RangeError(`Cannot copy array to a smaller size (${size} < ${this._size})`);
 
         const newArray = new FixedArray<T>(size);
-        for(let i = 0; i < this._size; i++)
+        for (let i = 0; i < this._size; i++)
             newArray.set(i, this._array[i]);
 
         return newArray;
