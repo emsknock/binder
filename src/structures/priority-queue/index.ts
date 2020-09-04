@@ -13,6 +13,8 @@ export class PriorityQueue<T> {
     private lChildOf = (i: number) =>
         ({ ...this._list.get(2 * i), index: 2 * 1 });
 
+    public size = () => this._list.size();
+
     public push(value: T, priority: number) {
 
         const list = this._list;
