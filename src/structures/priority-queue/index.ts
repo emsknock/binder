@@ -4,14 +4,17 @@ export class PriorityQueue<T> {
 
     private _list = new ArrayList<{ value: T, priority: number }>();
 
-    private parentOf = (i: number) =>
-        ({ ...this._list.get(~~(i / 2)), index: ~~(i / 2) }); // Double tilde is equivalent to floor()
+    private parentOf = (i: number) => this._list.has(i)
+        ? ({ ...this._list.get(~~(i / 2)), index: ~~(i / 2) }) // Double tilde is equivalent to floor()
+        : null;
 
-    private rChildOf = (i: number) =>
-        ({ ...this._list.get(2 * i + 1), index: 2 * i + 1 });
+    private rChildOf = (i: number) => this._list.has(i)
+        ? ({ ...this._list.get(2 * i + 1), index: 2 * i + 1 })
+        : null;
 
-    private lChildOf = (i: number) =>
-        ({ ...this._list.get(2 * i), index: 2 * 1 });
+    private lChildOf = (i: number) => this._list.has(i)
+        ? ({ ...this._list.get(2 * i), index: 2 * 1 })
+        : null;
 
     public size = () => this._list.size();
 
@@ -23,9 +26,9 @@ export class PriorityQueue<T> {
         let nodeIdx = list.getTail().index;
         while (true) {
             const parent = this.parentOf(nodeIdx);
-            if (priority > parent.priority) {
-                list.swapByIndex(nodeIdx, parent.index);
-                nodeIdx = parent.index;
+            if (priority > (parent?.priority ?? Infinity)) {
+                list.swapByIndex(nodeIdx, parent!.index);
+                nodeIdx = parent!.index;
             } else {
                 break;
             }
@@ -40,6 +43,8 @@ export class PriorityQueue<T> {
         list.swapByIndex(0, list.getTail().index);
         const value = list.popTail();
 
+        if (list.size() < 2) return value;
+
         let nodeIdx = 0;
         while (true) {
 
@@ -47,9 +52,13 @@ export class PriorityQueue<T> {
             const rChild = this.rChildOf(nodeIdx);
             const lChild = this.lChildOf(nodeIdx);
 
-            const maxChild = rChild.priority > lChild.priority
-                ? rChild
-                : lChild;
+            if (!rChild && !lChild) break;
+
+            const maxChild = !rChild || !lChild
+                ? (rChild ?? lChild)!
+                : rChild.priority > lChild.priority
+                    ? rChild
+                    : lChild;
 
             if (maxChild.priority > priority) {
                 list.swapByIndex(nodeIdx, maxChild.index);
