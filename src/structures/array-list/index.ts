@@ -33,6 +33,8 @@ export class ArrayList<T> {
         return tail;
     }
 
+    public has = (i: number) => this.isInBounds(i);
+
     public get(i: number) {
         if (!this.isInBounds(i))
             throw ReferenceError(`Index out of bounds for List size ${this._size}: ${i}`);
