@@ -36,6 +36,9 @@ export class PriorityQueue<T> {
 
     }
 
+    /**
+     * Retrieve and remove the most prioritised element in the queue.
+     */
     public pop() {
 
         const list = this._list;
@@ -43,6 +46,7 @@ export class PriorityQueue<T> {
         list.swapByIndex(0, list.getTail().index);
         const value = list.popTail();
 
+        // The heap is either empty or has a single node left, so we can skip the rest of max-heapify
         if (list.size() < 2) return value;
 
         let nodeIdx = 0;
@@ -52,8 +56,14 @@ export class PriorityQueue<T> {
             const rChild = this.rChildOf(nodeIdx);
             const lChild = this.lChildOf(nodeIdx);
 
+            // If neither child exist, the node is a leaf and max-heapify is complete
             if (!rChild && !lChild) break;
 
+            // - If either child doesn't exist (one must as per above),
+            //   the one that does exist is automatically the max child
+            // - If both exist, the max child is the one with a higher priority
+            // - If both exist and have equal priority, it doesn't matter which one
+            //   is used as the max child
             const maxChild = !rChild || !lChild
                 ? (rChild ?? lChild)!
                 : rChild.priority > lChild.priority
@@ -61,8 +71,12 @@ export class PriorityQueue<T> {
                     : lChild;
 
             if (maxChild.priority > priority) {
+
                 list.swapByIndex(nodeIdx, maxChild.index);
                 nodeIdx = maxChild.index;
+
+                continue;
+            
             } else {
                 break;
             }
