@@ -44,7 +44,7 @@ export class PriorityQueue<T> {
         const list = this._list;
 
         list.swapByIndex(0, list.getTail().index);
-        const value = list.popTail();
+        const { value } = list.popTail();
 
         // The heap is either empty or has a single node left, so we can skip the rest of max-heapify
         if (list.size() < 2) return value;
@@ -76,7 +76,7 @@ export class PriorityQueue<T> {
                 nodeIdx = maxChild.index;
 
                 continue;
-            
+
             } else {
                 break;
             }
