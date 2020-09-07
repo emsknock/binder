@@ -95,6 +95,9 @@ test("can swap by index", () => {
     list.swapByIndex(0, 3);
     expect(list.get(0)).toBe(4);
     expect(list.get(3)).toBe(1);
+    list.swapByIndex(1,2);
+    expect(list.get(1)).toBe(3);
+    expect(list.get(2)).toBe(2);
 });
 
 test("can't swap out of bounds", () => {
