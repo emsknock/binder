@@ -9,11 +9,11 @@ export class PriorityQueue<T> {
 		: null;
 
 	private rChildOf = (i: number) => this._list.has(i)
-		? ({ ...this._list.get(2 * i + 1), index: 2 * i + 1 })
+		? ({ ...this._list.get(2 * i + 2), index: 2 * i + 2 })
 		: null;
 
 	private lChildOf = (i: number) => this._list.has(i)
-		? ({ ...this._list.get(2 * i), index: 2 * 1 })
+		? ({ ...this._list.get(2 * i + 1), index: 2 * 1 + 1 })
 		: null;
 
 	public size = () => this._list.size();
