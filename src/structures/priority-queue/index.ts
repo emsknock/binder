@@ -4,15 +4,15 @@ export class PriorityQueue<T> {
 
 	private _list = new ArrayList<{ value: T, priority: number }>();
 
-	private parentOf = (i: number) => this._list.has(i)
+	private parentOf = (i: number) => this._list.has(~~(i / 2))
 		? ({ ...this._list.get(~~(i / 2)), index: ~~(i / 2) }) // Double tilde is equivalent to floor()
 		: null;
 
-	private rChildOf = (i: number) => this._list.has(i)
+	private rChildOf = (i: number) => this._list.has(2 * i + 2)
 		? ({ ...this._list.get(2 * i + 2), index: 2 * i + 2 })
 		: null;
 
-	private lChildOf = (i: number) => this._list.has(i)
+	private lChildOf = (i: number) => this._list.has(2 * i + 1)
 		? ({ ...this._list.get(2 * i + 1), index: 2 * 1 + 1 })
 		: null;
 
