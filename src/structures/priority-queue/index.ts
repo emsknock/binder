@@ -36,9 +36,9 @@ export class PriorityQueue<T> {
 
 	}
 
-    /**
-     * Retrieve and remove the most prioritised element in the queue.
-     */
+	/**
+	 * Retrieve and remove the most prioritised element in the queue.
+	 */
 	public pop() {
 
 		const list = this._list;
