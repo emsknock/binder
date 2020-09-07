@@ -25,13 +25,15 @@ export class PriorityQueue<T> {
 
 		let nodeIdx = list.getTail().index;
 		while (true) {
+
 			const parent = this.parentOf(nodeIdx);
-			if (priority > (parent?.priority ?? Infinity)) {
-				list.swapByIndex(nodeIdx, parent!.index);
-				nodeIdx = parent!.index;
-			} else {
-				break;
-			}
+
+			if (!parent) break;
+			if (priority < parent.priority) break;
+
+			list.swapByIndex(nodeIdx, parent!.index);
+			nodeIdx = parent.index;
+
 		}
 
 	}
@@ -70,16 +72,10 @@ export class PriorityQueue<T> {
 					? rChild
 					: lChild;
 
-			if (maxChild.priority > priority) {
+			if (maxChild.priority < priority) break;
 
-				list.swapByIndex(nodeIdx, maxChild.index);
-				nodeIdx = maxChild.index;
-
-				continue;
-
-			} else {
-				break;
-			}
+			list.swapByIndex(nodeIdx, maxChild.index);
+			nodeIdx = maxChild.index;
 
 		}
 
