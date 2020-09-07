@@ -49,6 +49,9 @@ export class ArrayList<T> {
 		const newIdx = this._size;
 		const size = this._array.size();
 
+		// Standard ArrayList behaviour:
+		// If adding the element would go out of bounds for the underlying array,
+		// we make more room by creating a copy of the array with twice the capacity
 		if (newIdx === size)
 			this._array = this._array.copy(size * 2);
 
@@ -62,6 +65,8 @@ export class ArrayList<T> {
 
 		if (!this.isInBounds(i)) throw ReferenceError(`Index out of bounds for List size ${this._size}: ${i}`);
 
+		// We move right from the removed element's position,
+		// shifting all remaining elements one step to the left.
 		for (let j = i + 1; j < this._array.size(); j++)
 			this._array.set(j - 1, this._array.get(j));
 
