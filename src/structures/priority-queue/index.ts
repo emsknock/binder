@@ -34,7 +34,7 @@ export class PriorityQueue<T> {
 			if (!parent) break;
 			if (priority < parent.priority) break;
 
-			list.swapByIndex(nodeIdx, parent!.index);
+			list.swapByIndex(nodeIdx, parent.index);
 			nodeIdx = parent.index;
 
 		}
