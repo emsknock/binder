@@ -30,7 +30,7 @@ test("popped items come in order of priority", () => {
 	const q = new PriorityQueue();
 	const alphabet = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
 	alphabet.forEach((letter, idx) => q.push(letter, idx));
-	for(let i = alphabet.length - 1; i >= 0; i--) {
+	for (let i = alphabet.length - 1; i >= 0; i--) {
 		expect(q.pop()).toBe(alphabet[i]);
 	}
 });
