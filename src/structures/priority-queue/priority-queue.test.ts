@@ -28,16 +28,9 @@ test("added items are in order of priority", () => {
 
 test("popped items come in order of priority", () => {
 	const q = new PriorityQueue();
-	q.push("A", 0);
-	expect(q.pop()).toBe("A");
-	q.push("A", 0);
-	q.push("B", 1);
-	expect(q.pop()).toBe("B");
-	expect(q.pop()).toBe("A");
-	q.push("A", 0);
-	q.push("B", 1);
-	q.push("C", 2);
-	expect(q.pop()).toBe("C");
-	expect(q.pop()).toBe("B");
-	expect(q.pop()).toBe("A");
+	const alphabet = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+	alphabet.forEach((letter, idx) => q.push(letter, idx));
+	for(let i = alphabet.length - 1; i >= 0; i--) {
+		expect(q.pop()).toBe(alphabet[i]);
+	}
 });
