@@ -6,7 +6,7 @@ export class PriorityQueue<T> {
 
 	private parentOf = (i: number) => {
 		if (i === 0) return null;
-		const parentIdx = ~~((i - 1)/2); // Double tilde is equivalent to floor()
+		const parentIdx = ~~((i - 1) / 2); // Double tilde is equivalent to floor()
 		return this._list.has(parentIdx)
 			? ({ ...this._list.get(parentIdx), index: parentIdx })
 			: null;
@@ -46,7 +46,7 @@ export class PriorityQueue<T> {
 
 		}
 
-		for(const node of list["_array"]["_array"]) {
+		for (const node of list["_array"]["_array"]) {
 			const idx = list["_array"]["_array"].indexOf(node);
 			const l = this.lChildOf(idx)?.priority ?? -Infinity;
 			const r = this.rChildOf(idx)?.priority ?? -Infinity;
