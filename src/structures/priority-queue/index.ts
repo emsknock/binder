@@ -6,18 +6,25 @@ export class PriorityQueue<T> {
 
 	private parentOf = (i: number) => {
 		if (i === 0) return null;
-		return this._list.has(~~(i / 2))
-			? ({ ...this._list.get(~~(i / 2)), index: ~~(i / 2) }) // Double tilde is equivalent to floor()
+		const parentIdx = ~~((i - 1)/2); // Double tilde is equivalent to floor()
+		return this._list.has(parentIdx)
+			? ({ ...this._list.get(parentIdx), index: parentIdx })
 			: null;
 	}
 
-	private rChildOf = (i: number) => this._list.has(2 * i + 2)
-		? ({ ...this._list.get(2 * i + 2), index: 2 * i + 2 })
-		: null;
+	private rChildOf = (i: number) => {
+		const childIndex = 2 * i + 2;
+		return this._list.has(childIndex)
+			? ({ ...this._list.get(childIndex), index: childIndex })
+			: null;
+	}
 
-	private lChildOf = (i: number) => this._list.has(2 * i + 1)
-		? ({ ...this._list.get(2 * i + 1), index: 2 * i + 1 })
-		: null;
+	private lChildOf = (i: number) => {
+		const childIndex = 2 * i + 1;
+		return this._list.has(childIndex)
+			? ({ ...this._list.get(childIndex), index: childIndex })
+			: null;
+	}
 
 	public size = () => this._list.size();
 
@@ -37,6 +44,17 @@ export class PriorityQueue<T> {
 			list.swapByIndex(nodeIdx, parent.index);
 			nodeIdx = parent.index;
 
+		}
+
+		for(const node of list["_array"]["_array"]) {
+			const idx = list["_array"]["_array"].indexOf(node);
+			const l = this.lChildOf(idx)?.priority ?? -Infinity;
+			const r = this.rChildOf(idx)?.priority ?? -Infinity;
+			if (node.priority < l || node.priority < r) {
+
+				console.error(node, list["_array"]["_array"]);
+				throw Error("Heap property not satisfied");
+			}
 		}
 
 	}
