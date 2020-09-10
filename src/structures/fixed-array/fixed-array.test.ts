@@ -41,14 +41,18 @@ test("doesn't allow creating a smaller copy", () => {
 
 test("default value is set", () => {
 	const arr = new FixedArray(50, "test");
-	for(let i = 0; i < 50; i++)
+	for (let i = 0; i < 50; i++)
 		expect(arr.get(i)).toBe("test");
 });
 
-test("change method works", () => {
+test("changeWithFn method works", () => {
 	const arr = new FixedArray(50, 0);
-	for(let i = 0; i < 50; i++)
+	for (let i = 0; i < 50; i++)
 		arr.changeWithFn(i, () => i);
-	for(let i = 0; i < 50; i++)
+	for (let i = 0; i < 50; i++)
 		expect(arr.get(i)).toBe(i);
+	for (let i = 0; i < 50; i++)
+		arr.changeWithFn(i, x => x / 2);
+	for (let i = 0; i < 50; i++)
+		expect(arr.get(i)).toBe(i / 2);
 });
