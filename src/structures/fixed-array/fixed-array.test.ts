@@ -38,3 +38,9 @@ test("doesn't allow indexing out of bounds", () => {
 test("doesn't allow creating a smaller copy", () => {
 	expect(() => (new FixedArray(5)).copy(4)).toThrowError(RangeError);
 });
+
+test("default value is set", () => {
+	const arr = new FixedArray(50, "test");
+	for(let i = 0; i < 50; i++)
+		expect(arr.get(i)).toBe("test");
+});

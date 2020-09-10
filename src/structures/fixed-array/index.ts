@@ -9,13 +9,14 @@
  */
 export class FixedArray<T> {
 
-	private _array: T[] = [];
+	private _array: T[];
 	private _size: number;
 
-	constructor(size: number) {
+	constructor(size: number, defaultValue?: T) {
 		if (size < 1)
 			throw RangeError(`Array size must be at least 1: ${size}`);
 		this._size = size;
+		this._array = Array(size).fill(defaultValue);
 	}
 
 	/** Guard to block attempts to index the array out of bounds */
