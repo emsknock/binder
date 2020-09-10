@@ -68,4 +68,9 @@ export class FixedArray<T> {
 		return newArray;
 	}
 
+	/** Apply a transformation function to the given element */
+	public change(i: number, fn: (oldValue: T) => T) {
+		this.set(i, fn(this.get(i)));
+	}
+
 }
