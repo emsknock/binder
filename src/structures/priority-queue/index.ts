@@ -46,17 +46,6 @@ export class PriorityQueue<T> {
 
 		}
 
-		for (const node of list["_array"]["_array"]) {
-			const idx = list["_array"]["_array"].indexOf(node);
-			const l = this.lChildOf(idx)?.priority ?? -Infinity;
-			const r = this.rChildOf(idx)?.priority ?? -Infinity;
-			if (node.priority < l || node.priority < r) {
-
-				console.error(node, list["_array"]["_array"]);
-				throw Error("Heap property not satisfied");
-			}
-		}
-
 	}
 
 	/**
