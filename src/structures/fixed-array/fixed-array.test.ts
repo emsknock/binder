@@ -48,7 +48,7 @@ test("default value is set", () => {
 test("change method works", () => {
 	const arr = new FixedArray(50, 0);
 	for(let i = 0; i < 50; i++)
-		arr.change(i, () => i);
+		arr.changeWithFn(i, () => i);
 	for(let i = 0; i < 50; i++)
 		expect(arr.get(i)).toBe(i);
 });
