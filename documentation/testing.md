@@ -16,11 +16,9 @@ $ npm test -- --coverage
 ```
 
 ## Coverage
-
-Current test coverage report:
-File            | % Stmts   | % Branch  | % Funcs | % Lines | Uncovered Line #s 
-----------------|-----------|-----------|---------|---------|-------------------
-**All files**   | **99.17** | **93.44** | **100** | **100** |                   
- array-list     |       100 |       100 |     100 |     100 |                   
- fixed-array    |       100 |       100 |     100 |     100 |                   
- priority-queue |     97.78 |     86.67 |     100 |     100 | 11,42,80          
+File            | % Stmts     | % Branch     | % Funcs     | % Lines     | Uncovered Line #s 
+----------------|-------------|--------------|-------------|-------------|-------------------
+All files       |   **96.77** |    **93.44** |   **96.43** |      **98** |                   
+ array-list     |       100   |        100   |       100   |       100   |                   
+ fixed-array    |     89.66   |        100   |     88.89   |     91.67   | 77-78             
+ priority-queue |     97.78   |      86.67   |       100   |       100   | 11,42,80          
