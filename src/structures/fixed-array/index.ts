@@ -73,4 +73,10 @@ export class FixedArray<T> {
 		this.set(i, transformer(this.get(i)));
 	}
 
+	public forEach(fn: (value: T, index: number, array: this) => void) {
+		for(let i = 0; i < this._size; i++) {
+			fn(this.get(i), i, this);
+		}
+	}
+
 }
