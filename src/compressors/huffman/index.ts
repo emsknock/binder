@@ -27,7 +27,7 @@ export class HuffmanCompressor {
         (byte) => this._frequencyMap.changeWithFn(byte, count => count + 1)
     );
     private fillNodeQueue = () => this._frequencyMap.forEach(
-        (freq, byte) => this._queue.push({ freq, byte }, freq)
+        (freq, byte) => freq > 0 && this._queue.push({ freq, byte }, freq)
     );
 
     private createHuffmanTree = () => {
