@@ -9,7 +9,7 @@ type HuffmanNode =
 class HuffmanCompressor {
 
     private _buffer: Buffer;
-    private _queue = new PriorityQueue<HuffmanNode>();
+    private _queue = new PriorityQueue<HuffmanNode>(false);
 
     /*
      * A map of bytes to their frequencies.
