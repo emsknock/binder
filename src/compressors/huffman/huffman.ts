@@ -6,7 +6,7 @@ type HuffmanNode =
     { freq: number, l: HuffmanNode, r?: HuffmanNode } |
     { freq: number, r: HuffmanNode, l?: HuffmanNode };
 
-class HuffmanCompressor {
+export class HuffmanCompressor {
 
     private _buffer: Buffer;
     private _queue = new PriorityQueue<HuffmanNode>(false);
