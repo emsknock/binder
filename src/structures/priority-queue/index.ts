@@ -4,6 +4,8 @@ export class PriorityQueue<T> {
 
     private _list = new ArrayList<{ value: T, priority: number }>();
 
+    constructor(private isMaxQueue: boolean) { }
+
     private parentOf = (i: number) => {
         if (i === 0) return null;
         const parentIdx = ~~((i - 1) / 2); // Double tilde is equivalent to floor()
@@ -39,7 +41,8 @@ export class PriorityQueue<T> {
             const parent = this.parentOf(nodeIdx);
 
             if (!parent) break;
-            if (priority < parent.priority) break;
+            if (this.isMaxQueue && priority < parent.priority) break;
+            if (!this.isMaxQueue && priority > parent.priority) break;
 
             list.swapByIndex(nodeIdx, parent.index);
             nodeIdx = parent.index;
@@ -49,7 +52,7 @@ export class PriorityQueue<T> {
     }
 
     /**
-     * Retrieve and remove the most prioritised element in the queue.
+     * Retrieve and remove the most/least prioritised element in the queue.
      */
     public pop() {
 
@@ -58,7 +61,7 @@ export class PriorityQueue<T> {
         list.swapByIndex(0, list.getTail().index);
         const { value } = list.popTail();
 
-        // The heap is either empty or has a single node left, so we can skip the rest of max-heapify
+        // The heap is either empty or has a single node left, so we can skip the rest of max/min-heapify
         if (list.size() < 2) return value;
 
         let nodeIdx = 0;
@@ -71,21 +74,34 @@ export class PriorityQueue<T> {
             // If neither child exist, the node is a leaf and max-heapify is complete
             if (!rChild && !lChild) break;
 
-            // - If either child doesn't exist (one must as per above),
-            //   the one that does exist is automatically the max child
-            // - If both exist, the max child is the one with a higher priority
-            // - If both exist and have equal priority, it doesn't matter which one
-            //   is used as the max child
-            const maxChild = !rChild || !lChild
-                ? (rChild ?? lChild)!
-                : rChild.priority > lChild.priority
-                    ? rChild
-                    : lChild;
+            if (this.isMaxQueue) {
+                // - If either child doesn't exist (one must as per above),
+                //   the one that does exist is automatically the max child
+                // - If both exist, the max child is the one with a higher priority
+                // - If both exist and have equal priority, it doesn't matter which one
+                //   is used as the max child
+                const maxChild = !rChild || !lChild
+                    ? (rChild ?? lChild)!
+                    : rChild.priority > lChild.priority
+                        ? rChild
+                        : lChild;
 
-            if (maxChild.priority < priority) break;
+                if (maxChild.priority < priority) break;
 
-            list.swapByIndex(nodeIdx, maxChild.index);
-            nodeIdx = maxChild.index;
+                list.swapByIndex(nodeIdx, maxChild.index);
+                nodeIdx = maxChild.index;
+            } else {
+                const minChild = !rChild || !lChild
+                    ? (rChild ?? lChild)!
+                    : rChild.priority < lChild.priority
+                        ? rChild
+                        : lChild;
+
+                if (minChild.priority > priority) break;
+
+                list.swapByIndex(nodeIdx, minChild.index);
+                nodeIdx = minChild.index;
+            }
 
         }
 
