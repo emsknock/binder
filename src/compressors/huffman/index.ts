@@ -36,12 +36,12 @@ export class HuffmanCompressor {
 
         do {
 
-            const a = this._queue.pop();
-            const b = this._queue.pop();
+            const l = this._queue.pop();
+            const r = this._queue.pop();
 
-            const freq = a.freq + b.freq;
+            const freq = l.freq + r.freq;
 
-            this._queue.push({ freq, byte: null, l: b, r: a }, freq);
+            this._queue.push({ freq, byte: null, l, r }, freq);
 
         } while (this._queue.size() > 1);
 
