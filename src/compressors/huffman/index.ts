@@ -1,10 +1,12 @@
 import { FixedArray } from "structures/fixed-array";
 import { PriorityQueue } from "structures/priority-queue";
 
-type HuffmanNode =
-    { freq: number, byte: number } |
-    { freq: number, l: HuffmanNode, r?: HuffmanNode } |
-    { freq: number, r: HuffmanNode, l?: HuffmanNode };
+interface HuffmanNode {
+    freq: number,
+    byte: number | null,
+    l?: HuffmanNode,
+    r?: HuffmanNode
+}
 
 export class HuffmanCompressor {
 
@@ -39,7 +41,7 @@ export class HuffmanCompressor {
 
             const freq = a.freq + b.freq;
 
-            this._queue.push({ freq, l: b, r: a }, freq);
+            this._queue.push({ freq, byte: null, l: b, r: a }, freq);
 
         } while (this._queue.size() > 1);
 
