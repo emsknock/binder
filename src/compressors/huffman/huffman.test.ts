@@ -34,3 +34,17 @@ it("creates huffman tree correctly", () => {
     expect(root.l!.l!.l!.byte).toBe(0xbe);
     expect(root.l!.r!.l!.byte).toBe(0xef);
 });
+
+it("fills encoding map correctly", () => {
+    const h = new HuffmanCompressor(Buffer.from("DEADBEEF01010101", "hex"));
+    h["fillFrequencyArray"]();
+    h["fillNodeQueue"]();
+    h["fillHuffmanTree"]();
+    h["fillEncodingMap"]();
+    const map = h["_encodingMap"];
+    expect(map.get(0x01)).toBe("1");
+    expect(map.get(0xde)).toBe("011");
+    expect(map.get(0xad)).toBe("001");
+    expect(map.get(0xbe)).toBe("000");
+    expect(map.get(0xef)).toBe("010");
+});
