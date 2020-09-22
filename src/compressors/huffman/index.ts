@@ -14,11 +14,6 @@ export class HuffmanCompressor {
     private _tree: HuffmanNode = { freq: 0, byte: null };
     private _queue = new PriorityQueue<HuffmanNode>(false);
     private _encodingMap = new FixedArray<string>(256, "");
-
-    /*
-     * A map of bytes to their frequencies.
-     * The index is the byte value and the stored value at that index is that byte's frequency in the buffer.
-     **/
     private _frequencyMap = new FixedArray(256, 0);
 
     constructor(buffer: Buffer) {
