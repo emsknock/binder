@@ -27,7 +27,8 @@ it("creates huffman tree correctly", () => {
     const h = new HuffmanCompressor(Buffer.from("DEADBEEF01010101", "hex"));
     h["fillFrequencyArray"]();
     h["fillNodeQueue"]();
-    const root = h["createHuffmanTree"]();
+    h["fillHuffmanTree"]();
+    const root = h["_tree"];
     expect(root.l!.r!.r!.byte).toBe(0xde);
     expect(root.l!.l!.r!.byte).toBe(0xad);
     expect(root.l!.l!.l!.byte).toBe(0xbe);

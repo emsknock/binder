@@ -11,7 +11,9 @@ interface HuffmanNode {
 export class HuffmanCompressor {
 
     private _buffer: Buffer;
+    private _tree: HuffmanNode = { freq: 0, byte: null };
     private _queue = new PriorityQueue<HuffmanNode>(false);
+    private _encodings = new FixedArray<string>(256, "");
 
     /*
      * A map of bytes to their frequencies.
@@ -32,7 +34,7 @@ export class HuffmanCompressor {
         (freq, byte) => freq > 0 && this._queue.push({ freq, byte }, freq)
     );
 
-    private createHuffmanTree = () => {
+    private fillHuffmanTree = () => {
 
         do {
 
@@ -45,14 +47,16 @@ export class HuffmanCompressor {
 
         } while (this._queue.size() > 1);
 
-        return this._queue.pop();
+        this._tree = this._queue.pop();
 
     }
 
     public compress() {
+
         this.fillFrequencyArray();
         this.fillNodeQueue();
-        const root = this.createHuffmanTree();
+        this.fillHuffmanTree();
+
     }
 
 }
