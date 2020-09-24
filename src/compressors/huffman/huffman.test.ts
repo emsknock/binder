@@ -28,7 +28,7 @@ it("creates huffman tree correctly", () => {
     h["fillFrequencyArray"]();
     h["fillNodeQueue"]();
     h["fillHuffmanTree"]();
-    const root = h["_tree"];
+    const root = h["_root"];
     expect(root.l!.r!.r!.byte).toBe(0xde);
     expect(root.l!.l!.r!.byte).toBe(0xad);
     expect(root.l!.l!.l!.byte).toBe(0xbe);
