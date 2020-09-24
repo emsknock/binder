@@ -4,8 +4,19 @@ export class PriorityQueue<T> {
 
     private _list = new ArrayList<{ value: T, priority: number }>();
 
+    /**
+     * Creates a new Priority Queue
+     * @param isMaxQueue Should items pop with larger priorities first
+     **/
     constructor(private isMaxQueue: boolean) { }
 
+    /**
+     * Return the parent of the node at the specified index as
+     * ```typescript
+     * { value: T, priority: number, index: number }
+     * ```
+     * **Returns null if trying to get the parent of root**
+     */
     private parentOf = (i: number) => {
         if (i === 0) return null;
         const parentIdx = ~~((i - 1) / 2); // Double tilde is equivalent to floor()
@@ -14,6 +25,13 @@ export class PriorityQueue<T> {
             : null;
     }
 
+    /**
+     * Return the right-side child of the node at the specified index as
+     * ```typescript
+     * { value: T, priority: number, index: number }
+     * ```
+     * **Returns null if a right-side child doesn't exist**
+     */
     private rChildOf = (i: number) => {
         const childIndex = 2 * i + 2;
         return this._list.has(childIndex)
@@ -21,6 +39,13 @@ export class PriorityQueue<T> {
             : null;
     }
 
+    /**
+     * Return the left-side child of the node at the specified index as
+     * ```typescript
+     * { value: T, priority: number, index: number }
+     * ```
+     * **Returns null if a left-side child doesn't exist**
+     */
     private lChildOf = (i: number) => {
         const childIndex = 2 * i + 1;
         return this._list.has(childIndex)
@@ -30,7 +55,12 @@ export class PriorityQueue<T> {
 
     public size = () => this._list.size();
 
+    /**
+     * Push the given value into the queue with the specified priority.
+     */
     public push(value: T, priority: number) {
+
+        // A very basic min/max-heapify implementation
 
         const list = this._list;
         list.add({ value, priority });
@@ -56,6 +86,8 @@ export class PriorityQueue<T> {
      */
     public pop() {
 
+        // Again very basic element removal from a min/max-heap
+
         const list = this._list;
 
         list.swapByIndex(0, list.getTail().index);
@@ -71,7 +103,7 @@ export class PriorityQueue<T> {
             const rChild = this.rChildOf(nodeIdx);
             const lChild = this.lChildOf(nodeIdx);
 
-            // If neither child exist, the node is a leaf and max-heapify is complete
+            // If neither child exist, the node is a leaf and min/max-heapify is complete
             if (!rChild && !lChild) break;
 
             if (this.isMaxQueue) {
@@ -91,6 +123,7 @@ export class PriorityQueue<T> {
                 list.swapByIndex(nodeIdx, maxChild.index);
                 nodeIdx = maxChild.index;
             } else {
+                // Just a mirrored version of the above
                 const minChild = !rChild || !lChild
                     ? (rChild ?? lChild)!
                     : rChild.priority < lChild.priority
