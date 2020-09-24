@@ -15,7 +15,12 @@ export class ArrayList<T> {
     public has = (i: number) => this.isInBounds(i);
     public size = () => this._size;
 
-    /** Returns the value and the index of the head element */
+    /**
+     * Returns the value and the index of the head element as
+     * ```typescript
+     * { value: T, index: 0 }
+     * ```
+     * */
     public getHead = () => {
         if (this._size < 1) throw ReferenceError("Cannot get head of an empty array");
         return {
@@ -23,7 +28,12 @@ export class ArrayList<T> {
             index: 0
         };
     }
-    /** Returns the value and the index of the tail element */
+    /**
+     * Returns the value and the index of the tail element as
+     * ```typescript
+     * { value: T, index: number }
+     * ```
+     **/
     public getTail = () => {
         if (this._size < 1) throw ReferenceError("Cannot get tail of an empty array");
         return {
