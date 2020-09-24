@@ -19,10 +19,7 @@ export class FixedArray<T> {
         this._array = Array(size).fill(defaultValue);
     }
 
-    /** Guard to block attempts to index the array out of bounds */
     private isInBounds = (i: number) => !(i < 0) && i < this._size;
-
-    /** Get the size of the array. The max index is this value minus one. */
     public size = () => this._size;
 
     /** Get an element in the array by its index */
