@@ -1,3 +1,4 @@
+import { ArrayList } from "structures/array-list";
 import { FixedArray } from "structures/fixed-array";
 import { PriorityQueue } from "structures/priority-queue";
 
@@ -91,8 +92,20 @@ export class HuffmanCompressor {
         this.fillNodeQueue();
         this.fillHuffmanTree();
         this.fillEncodingMap();
+        
+        // The amount of bits in the data portion of the compressed buffer
+        const bitCount = this._inputBuffer.reduce(
+            (accu, byte) => accu + this._encodingMap.get(byte).length,
+            0
+        );
 
-
+        const bitList = new ArrayList<number>(bitCount);
+        for (const byte of this._inputBuffer) {
+            const bitString = this._encodingMap.get(byte);
+            for (const bitChar of bitString) {
+                bitList.add(bitChar === "0" ? 0 : 1);
+            }
+        }
 
     }
 
