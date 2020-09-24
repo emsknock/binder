@@ -4,7 +4,7 @@ import { PriorityQueue } from "structures/priority-queue";
 interface HuffmanNode {
 
     freq: number,
-    
+
     // Null iff this node is not a leaf
     byte: number | null,
 
@@ -75,8 +75,8 @@ export class HuffmanCompressor {
                 // Since the byte is null, this is not a leaf.
                 // Like noted in the HuffmanNode interface specification,
                 // if a node is not a leaf both of its children will always exist.
-                if(node.l) traverse(node.l, path + "0");
-                if(node.r) traverse(node.r, path + "1");
+                if (node.l) traverse(node.l, path + "0");
+                if (node.r) traverse(node.r, path + "1");
             }
         };
         traverse(this._root, "");
