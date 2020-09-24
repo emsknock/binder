@@ -10,19 +10,19 @@ interface HuffmanNode {
 
 export class HuffmanCompressor {
 
-    private _buffer: Buffer;
-    private _tree: HuffmanNode = { freq: 0, byte: null };
-    private _queue = new PriorityQueue<HuffmanNode>(false);
-    private _encodingMap = new FixedArray<string>(256, "");
+    private _inputBuffer: Buffer;
     private _frequencyMap = new FixedArray(256, 0);
+    private _queue = new PriorityQueue<HuffmanNode>(false);
+    private _tree: HuffmanNode = { freq: 0, byte: null };
+    private _encodingMap = new FixedArray<string>(256, "");
 
     constructor(buffer: Buffer) {
         if (buffer.length < 1)
             throw Error("Cannot compress empty buffer");
-        this._buffer = buffer;
+        this._inputBuffer = buffer;
     }
 
-    private fillFrequencyArray = () => this._buffer.forEach(
+    private fillFrequencyArray = () => this._inputBuffer.forEach(
         (byte) => this._frequencyMap.changeWithFn(byte, count => count + 1)
     );
     private fillNodeQueue = () => this._frequencyMap.forEach(
