@@ -73,6 +73,7 @@ export class FixedArray<T> {
         this.set(i, transformer(this.get(i)));
     }
 
+    /** Call the given function with all of this array's elements in order */
     public forEach(fn: (value: T, index: number, array: this) => void) {
         for (let i = 0; i < this._size; i++) {
             fn(this.get(i), i, this);
