@@ -2,18 +2,34 @@ import { FixedArray } from "structures/fixed-array";
 import { PriorityQueue } from "structures/priority-queue";
 
 interface HuffmanNode {
+
     freq: number,
+    
+    // Null iff this node is not a leaf
     byte: number | null,
+
+    // Notice that non-leaf Huffman nodes never have only one child set:
+    // either both exist or the node is a leaf
     l?: HuffmanNode,
     r?: HuffmanNode
+
 }
 
 export class HuffmanCompressor {
 
-    private _inputBuffer: Buffer;
+    /** A buffer object passed in the constructor */
+    private readonly _inputBuffer: Buffer;
+
+    /** Map bytes to their count in the input buffer */
     private _frequencyMap = new FixedArray(256, 0);
+
+    /** The queue used in building the Huffman tree */
     private _queue = new PriorityQueue<HuffmanNode>(false);
-    private _tree: HuffmanNode = { freq: 0, byte: null };
+
+    /** The root node of the Huffman tree */
+    private _root: HuffmanNode = { freq: 0, byte: null };
+
+    /** Maps bytes to their Huffman encodings (variable-sized strings of bits) */
     private _encodingMap = new FixedArray<string>(256, "");
 
     constructor(buffer: Buffer) {
@@ -23,12 +39,17 @@ export class HuffmanCompressor {
     }
 
     private fillFrequencyArray = () => this._inputBuffer.forEach(
+        // Increment this byte's count in the map
         (byte) => this._frequencyMap.changeWithFn(byte, count => count + 1)
     );
     private fillNodeQueue = () => this._frequencyMap.forEach(
+        // Skip pushing bytes that do not occur in the buffer
+        // This prevents the tree from having leafs with 0 frequency
         (freq, byte) => freq > 0 && this._queue.push({ freq, byte }, freq)
     );
     private fillHuffmanTree = () => {
+
+        // Standard Huffman tree build
 
         do {
 
@@ -41,27 +62,37 @@ export class HuffmanCompressor {
 
         } while (this._queue.size() > 1);
 
-        this._tree = this._queue.pop();
+        this._root = this._queue.pop();
 
     }
     private fillEncodingMap = () => {
+        // A recursive function to build the variable-sized strings of bits for the encoding map
         const traverse = (node: HuffmanNode, path: string) => {
             if (node.byte !== null) {
+                // Since the byte is not null, this is a leaf.
                 this._encodingMap.set(node.byte, path);
             } else {
+                // Since the byte is null, this is not a leaf.
+                // Like noted in the HuffmanNode interface specification,
+                // if a node is not a leaf both of its children will always exist.
                 if(node.l) traverse(node.l, path + "0");
                 if(node.r) traverse(node.r, path + "1");
             }
         };
-        traverse(this._tree, "");
+        traverse(this._root, "");
     }
 
     public compress() {
+
+        // This whole algorithm could exist as a single long function,
+        // but I've decided to implement it as a class with separate steps to make testing easier
 
         this.fillFrequencyArray();
         this.fillNodeQueue();
         this.fillHuffmanTree();
         this.fillEncodingMap();
+
+
 
     }
 
