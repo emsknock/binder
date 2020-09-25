@@ -116,14 +116,14 @@ export class HuffmanCompressor {
         for (let octetIdx = 0; octetIdx < bitList.size(); octetIdx += 8) {
             const offsetInCompressed = octetIdx / 8;
             const octet =
-                (bitList.get(octetIdx + 0)) << 7 |
-                (bitList.get(octetIdx + 1)) << 6 |
-                (bitList.get(octetIdx + 2)) << 5 |
-                (bitList.get(octetIdx + 3)) << 4 |
-                (bitList.get(octetIdx + 4)) << 3 |
-                (bitList.get(octetIdx + 5)) << 2 |
-                (bitList.get(octetIdx + 6)) << 1 |
-                (bitList.get(octetIdx + 7));
+                (bitList.getSafe(octetIdx + 0, 0)) << 7 |
+                (bitList.getSafe(octetIdx + 1, 0)) << 6 |
+                (bitList.getSafe(octetIdx + 2, 0)) << 5 |
+                (bitList.getSafe(octetIdx + 3, 0)) << 4 |
+                (bitList.getSafe(octetIdx + 4, 0)) << 3 |
+                (bitList.getSafe(octetIdx + 5, 0)) << 2 |
+                (bitList.getSafe(octetIdx + 6, 0)) << 1 |
+                (bitList.getSafe(octetIdx + 7, 0));
             compressedData.writeUInt8(octet, offsetInCompressed);
         }
 
