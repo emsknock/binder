@@ -74,8 +74,8 @@ export class HuffmanCompressor {
                 this._encodingMap.set(node.byte, path);
             } else {
                 // Since the byte is null, this is not a leaf.
-                // Like noted in the HuffmanNode interface specification,
-                // if a node is not a leaf both of its children will always exist.
+                // Like noted in the HuffmanNode interface specification above,
+                // if a node is not a leaf, both of its children will always exist.
                 if (node.l) traverse(node.l, path + "0");
                 if (node.r) traverse(node.r, path + "1");
             }
@@ -99,6 +99,9 @@ export class HuffmanCompressor {
             0
         );
 
+        // The encodings are saved as strings of bits (actually characters 0 and 1 of course),
+        // so the compressed data is basically a concatenation of the encoded bytes of the original data.
+        // It's temporarily held as an array of bits, but turned into a buffer in the next step.
         const bitList = new ArrayList<number>(bitCount);
         for (const byte of this._inputBuffer) {
             const bitString = this._encodingMap.get(byte);
@@ -107,6 +110,8 @@ export class HuffmanCompressor {
             }
         }
 
+        // Node Buffers will only hold at least octet sized elements,
+        // so the bit list has to be divided into octets and then those octets written to the buffer.
         const compressedData = Buffer.alloc(Math.floor(bitCount / 8));
         for (let octetIdx = 0; octetIdx < bitList.size(); octetIdx += 8) {
             const offsetInCompressed = octetIdx / 8;
