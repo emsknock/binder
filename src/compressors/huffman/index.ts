@@ -107,6 +107,21 @@ export class HuffmanCompressor {
             }
         }
 
+        const compressedData = Buffer.alloc(Math.floor(bitCount / 8));
+        for (let octetIdx = 0; octetIdx < bitList.size(); octetIdx += 8) {
+            const offsetInCompressed = octetIdx / 8;
+            const octet =
+                (bitList.get(octetIdx + 0)) << 7 |
+                (bitList.get(octetIdx + 1)) << 6 |
+                (bitList.get(octetIdx + 2)) << 5 |
+                (bitList.get(octetIdx + 3)) << 4 |
+                (bitList.get(octetIdx + 4)) << 3 |
+                (bitList.get(octetIdx + 5)) << 2 |
+                (bitList.get(octetIdx + 6)) << 1 |
+                (bitList.get(octetIdx + 7));
+            compressedData.writeUInt8(octet, offsetInCompressed);
+        }
+
     }
 
 }
