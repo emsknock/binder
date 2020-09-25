@@ -17,12 +17,11 @@ $ npm test -- --coverage
 
 ## Coverage
 
-Files not yet covered:
-* compressors/huffman
-
-File                       | % Stmts     | % Branch     | % Funcs     | % Lines     | Uncovered Line #s 
----------------------------|-------------|--------------|-------------|-------------|-------------------
-All files                  |   **96.77** |    **93.44** |   **96.43** |      **98** |                   
- structures/array-list     |       100   |        100   |       100   |       100   |                   
- structures/fixed-array    |     89.66   |        100   |     88.89   |     91.67   | 77-78             
- structures/priority-queue |     97.78   |      86.67   |       100   |       100   | 11,42,80          
+File                       | % Stmts   | % Branch  | % Funcs  | % Lines   | Uncovered Line #s 
+---------------------------|-----------|-----------|----------|-----------|-------------------
+All files                  | **86.84** | **82.83** | **88.1** | **86.54** |                   
+ compressors/huffman       |    64.71  |    58.33  |   81.82  |    62.22  | 38,91-127         
+ structures/array-list     |    89.29  |    77.78  |      80  |    90.48  | 58-62,120-121     
+ structures/fixed-array    |      100  |      100  |     100  |      100  |                   
+ structures/priority-queue |    98.15  |       88  |     100  |      100  | 24,74,116,128     
+---------------------------|-----------|-----------|----------|-----------|-------------------
