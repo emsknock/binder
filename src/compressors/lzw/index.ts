@@ -1,4 +1,6 @@
 import { ArrayList } from "structures/array-list";
+import { BufferReader } from "utils/buffer-reader";
+import { charToByte } from "utils/bytes-chars";
 
 export class LzwCompressor {
 
@@ -15,18 +17,35 @@ export class LzwCompressor {
 
     public compress() {
 
-        let str = "";
-        let idx = 1;
-        for (const byte of this._inputBuffer) {
+        const rawOut = new ArrayList<{ pref: number, byte: number }>();
+        const reader = new BufferReader(this._inputBuffer);
 
-            str += String.fromCharCode(byte);
+        let code = 1;
+        do {
 
-            if (this._codebook.has(str)) continue;
-            
-            this._codebook.set(str, idx);
-            idx++;
+            const slice = reader.readUntil(s => !this._codebook.has(s));
 
-        }
+            const head = slice.slice(0, -1); // String without the last char
+            const tail = slice.slice(-1); // The last char of string
+
+            const pref = this._codebook.get(head) ?? 0;
+            const byte = charToByte(tail);
+
+            this._codebook.set(slice, code++);
+
+            rawOut.add({ pref, byte });
+
+        } while (reader.bytesLeft() > 0);
+
+        const output = Buffer.alloc(rawOut.size() * 2);
+        rawOut.forEach(
+            ({ pref, byte }, index) => {
+                output.writeUInt8(pref, index * 2);
+                output.writeUInt8(byte, index * 2 + 1);
+            }
+        );
+
+        return output;
 
     }
 
