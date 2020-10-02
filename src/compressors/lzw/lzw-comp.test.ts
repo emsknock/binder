@@ -3,6 +3,10 @@ import { LzwCompressor } from ".";
 const $ = (array: number[]) => (new LzwCompressor(Buffer.from(array))).compress();
 const buff = (array: number[]) => Buffer.from(array);
 
+it("throws when given an empty buffer", () => {
+    expect(() => $([])).toThrow();
+});
+
 it("compresses small example correctly", () => {
 
     // Example from the YouTube video "The Beauty of Lempel-Ziv Compression"
