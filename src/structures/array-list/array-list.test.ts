@@ -119,3 +119,10 @@ test("can pop tail", () => {
 test("can't pop tail from empty list", () => {
     expect(() => (new ArrayList(1)).popTail()).toThrowError(ReferenceError);
 });
+
+test("safe getter works", () => {
+    const list = new ArrayList(1);
+    list.add(1337);
+    expect(list.getSafe(0, "NO")).toBe(1337);
+    expect(list.getSafe(1, "NO")).toBe("NO");
+});
