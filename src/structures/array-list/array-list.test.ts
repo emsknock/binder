@@ -126,3 +126,11 @@ test("safe getter works", () => {
     expect(list.getSafe(0, "NO")).toBe(1337);
     expect(list.getSafe(1, "NO")).toBe("NO");
 });
+
+test("safe setter works", () => {
+    const list = new ArrayList(1);
+    list.add(1337);
+    expect(() => list.setSafe(5, 0)).not.toThrow();
+    expect(list.setSafe(0, 0)).toBeUndefined();
+    expect(list.get(0)).toBe(0);
+});
