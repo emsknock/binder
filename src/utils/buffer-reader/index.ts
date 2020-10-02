@@ -27,7 +27,7 @@ export class BufferReader {
 
             const readIndex = this.readHeadPosition + offset;
 
-            if(readIndex >= this.buffer.length) return str;
+            if (readIndex >= this.buffer.length) return str;
 
             str += String.fromCharCode(this.buffer.readUInt8(readIndex));
             offset++;
