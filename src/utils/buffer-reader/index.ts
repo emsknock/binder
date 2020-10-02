@@ -21,22 +21,22 @@ export class BufferReader {
      */
     public readUntil = (predicate: (slice: string) => boolean) => {
 
-        let str = "";
+        let output = "";
         let offset = 0;
         do {
 
             const readIndex = this.readHeadPosition + offset;
+            if (readIndex >= this.buffer.length) break;
+            
+            output += String.fromCharCode(this.buffer.readUInt8(readIndex));
 
-            if (readIndex >= this.buffer.length) return str;
-
-            str += String.fromCharCode(this.buffer.readUInt8(readIndex));
             offset++;
 
-        } while (!predicate(str));
+        } while (!predicate(output));
 
         this.readHeadPosition += offset;
 
-        return str;
+        return output;
 
     }
 
