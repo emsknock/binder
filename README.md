@@ -13,3 +13,4 @@ Written by Emma Koskinen for the University of Helsinki Datastructures and Algor
 * [Week 2](./documentation/week-2.md)
 * [Week 3](./documentation/week-3.md)
 * [Week 4](./documentation/week-4.md)
+* [Week 5](./documentation/week-5.md)
