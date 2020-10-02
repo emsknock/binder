@@ -55,7 +55,9 @@ export class ArrayList<T> {
 
     /** Get an element by index – returns the second parameter if trying to get out of bounds */
     public getSafe<D>(i: number, outOfBoundsValue: D) {
-        return this._array.get(i) ?? outOfBoundsValue;
+        return this.has(i)
+            ? this._array.get(i)
+            : outOfBoundsValue;
     }
     /** Set an element by index — trying to set out of bounds will be ignored */
     public setSafe(i: number, v: T) {
