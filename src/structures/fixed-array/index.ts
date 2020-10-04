@@ -12,14 +12,10 @@ export class FixedArray<T> {
     private _array: T[];
     private _size: number;
 
-    constructor(size: number, defaultValue?: () => T | T) {
+    constructor(size: number, defaultValue?: T) {
         if (size < 1)
             throw RangeError(`Array size must be at least 1: ${size}`);
-        if (typeof defaultValue === "function") {
-            this._array = Array.from({ length: size }, defaultValue);
-        } else {
-            this._array = Array(size).fill(defaultValue);
-        }
+        this._array = Array(size).fill(defaultValue);
         this._size = size;
     }
 
