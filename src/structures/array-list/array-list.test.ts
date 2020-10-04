@@ -157,3 +157,19 @@ test("find returns undefined if predicate doesn't match", () => {
     [1, 2, 3, 4, 5, 6, 7, 8].forEach(n => list.add(n));
     expect(list.find(() => false)).toBeUndefined();
 });
+
+test("isEqual returns true when the parameter matches", () => {
+    const list1 = new ArrayList<number>(8);
+    [1, 2, 3, 4, 5, 6, 7, 8].forEach(n => list1.add(n));
+    const list2 = new ArrayList<number>(8);
+    [1, 2, 3, 4, 5, 6, 7, 8].forEach(n => list2.add(n));
+    expect(list1.isEqual(list2)).toBe(true);
+});
+
+test("isEqual returns false when the parameter doesn't match", () => {
+    const list1 = new ArrayList<number>(8);
+    [1, 2, 3, 4, 5, 6, 7, 8].forEach(n => list1.add(n));
+    const list2 = new ArrayList<number>(8);
+    [1, 2, 3, 4, 5, 6, 7, 9].forEach(n => list2.add(n));
+    expect(list1.isEqual(list2)).toBe(false);
+});
