@@ -3,6 +3,6 @@
  */
 export interface Identifiable {
 
-    id(): number;
+    readonly id: number;
 
 }
