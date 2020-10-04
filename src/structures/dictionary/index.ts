@@ -1,30 +1,30 @@
 import { FixedArray } from "structures/fixed-array";
 import { Bucket } from "structures/bucket";
 
-import { Identifiable } from "types/identifiable";
+import { ByteList } from "types/byte-list";
 
-export class Dictionary<K extends Identifiable, V> {
+export class Dictionary<V> {
 
-    private _buckets = new FixedArray<Bucket<K, V>>(256).map(() => new Bucket<K, V>());
+    private _buckets = new FixedArray<Bucket<V>>(256).map(() => new Bucket<V>());
 
-    private getBucket = (key: K) => this._buckets.get(key.id % 256);
+    private getBucket = (key: ByteList) => this._buckets.get(key.size() % 256);
 
-    public set(key: K, value: V) {
+    public set(key: ByteList, value: V) {
         this.getBucket(key).add(key, value);
     }
 
-    public has(key: K) {
+    public has(key: ByteList) {
         return typeof this.getBucket(key).find(key) !== "undefined";
     }
 
-    public get(key: K) {
+    public get(key: ByteList) {
         const element = this.getBucket(key).find(key);
         if (!element)
-            throw Error(`No such key in dictionary: ${key.id}`);
+            throw Error("No such key in dictionary");
         return element.value;
     }
 
-    public getSafe(key: K, defaultValue: V) {
+    public getSafe(key: ByteList, defaultValue: V) {
         return this.getBucket(key).find(key)?.value ?? defaultValue;
     }
 

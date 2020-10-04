@@ -1,12 +1,12 @@
 import { ArrayList } from "structures/array-list";
-import { Identifiable } from "types/identifiable";
+import { ByteList } from "types/byte-list";
 
-export class Bucket<K extends Identifiable, V> {
+export class Bucket<V> {
 
-    private list = new ArrayList<{ key: K, value: V }>(2);
+    private list = new ArrayList<{ key: ByteList, value: V }>(2);
 
-    public add = (key: K, value: V) => this.list.add({ key, value });
+    public add = (key: ByteList, value: V) => this.list.add({ key, value });
 
-    public find = (key: K)  => this.list.find(x => x.key.id === key.id);
+    public find = (key: ByteList) => this.list.find(x => x.key.isEqual(key));
 
 }

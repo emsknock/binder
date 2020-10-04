@@ -8,7 +8,7 @@ export class LzwCompressor {
     /** A buffer object passed in the constructor */
     private readonly _inputBuffer: Buffer;
 
-    private _codebook = new Dictionary<ArrayList<number>, number>();
+    private _codebook = new Dictionary<number>();
 
     constructor(buffer: Buffer) {
         if (buffer.length < 1)
