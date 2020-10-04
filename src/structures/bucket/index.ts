@@ -15,13 +15,20 @@ export class Bucket<K extends Identifiable, V> {
         this.list.add({ key, value });
     }
 
+    private fetch(key: K) {
+        return this.list.find(x => x.key.id === key.id);
+    }
+
+    public has(key: K) {
+        return typeof this.fetch(key) !== "undefined";
+    }
+
     public find(key: K) {
 
-        const idToFind = key.id;
-        const element = this.list.find(x => x.key.id === idToFind);
+        const element = this.fetch(key);
 
         if (!element)
-            throw Error(`No such key in bucket: ${idToFind}`);
+            throw Error(`No such key in bucket: ${key.id}`);
 
         return element;
 
