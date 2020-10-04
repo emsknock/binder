@@ -20,6 +20,27 @@ export class ArrayList<T> implements Identifiable {
     public has = (i: number) => this.isInBounds(i);
     public size = () => this._size;
 
+    /** Get an element by index — throws if out of bounds */
+    public get(i: number) {
+        if (!this.isInBounds(i)) throw ReferenceError(`Index out of bounds for List size ${this._size}: ${i}`);
+        return this._array.get(i);
+    }
+    /** Set an element by index — throws if out of bounds */
+    public set(i: number, v: T) {
+        if (!this.isInBounds(i)) throw ReferenceError(`Index out of bounds for List size ${this._size}: ${i}`);
+        this._array.set(i, v);
+    }
+    /** Get an element by index – returns the second parameter if trying to get out of bounds */
+    public getSafe<D>(i: number, defaultValue: D) {
+        return this.has(i)
+            ? this._array.get(i)
+            : defaultValue;
+    }
+    /** Set an element by index — trying to set out of bounds will be ignored */
+    public setSafe(i: number, v: T) {
+        if (this.isInBounds(i)) this._array.set(i, v);
+    }
+
     /**
      * Returns the value and the index of the head element as
      * ```typescript
@@ -45,28 +66,6 @@ export class ArrayList<T> implements Identifiable {
             value: this._array.get(this._size - 1),
             index: this._size - 1
         };
-    }
-
-    /** Get an element by index — throws if out of bounds */
-    public get(i: number) {
-        if (!this.isInBounds(i)) throw ReferenceError(`Index out of bounds for List size ${this._size}: ${i}`);
-        return this._array.get(i);
-    }
-    /** Set an element by index — throws if out of bounds */
-    public set(i: number, v: T) {
-        if (!this.isInBounds(i)) throw ReferenceError(`Index out of bounds for List size ${this._size}: ${i}`);
-        this._array.set(i, v);
-    }
-
-    /** Get an element by index – returns the second parameter if trying to get out of bounds */
-    public getSafe<D>(i: number, defaultValue: D) {
-        return this.has(i)
-            ? this._array.get(i)
-            : defaultValue;
-    }
-    /** Set an element by index — trying to set out of bounds will be ignored */
-    public setSafe(i: number, v: T) {
-        if (this.isInBounds(i)) this._array.set(i, v);
     }
 
     /** Add a value to the end of the list */
