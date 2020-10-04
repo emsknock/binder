@@ -1,16 +1,11 @@
 import { FixedArray } from "structures/fixed-array";
-import { Identifiable } from "types/identifiable";
 
-export class ArrayList<T> implements Identifiable {
-
-    static ID = 0;
-    public readonly id: number;
+export class ArrayList<T> {
 
     private _array: FixedArray<T>;
     private _size = 0;
 
     constructor(initialSize = 256) {
-        this.id = ++ArrayList.ID;
         this._array = new FixedArray(initialSize);
     }
 
@@ -136,6 +131,14 @@ export class ArrayList<T> implements Identifiable {
                 return value;
             }
         }
+    }
+
+    public isEqual(to: ArrayList<T>) {
+        if (this.size() !== to.size()) return false;
+        for (let i = 0; i < this._size; i++) {
+            if (this.get(i) !== to.get(i)) return false;
+        }
+        return true;
     }
 
 }
