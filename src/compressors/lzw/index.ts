@@ -29,7 +29,7 @@ export class LzwCompressor {
             const tail = slice.popTail();
             const head = slice;
 
-            const pref = this._codebook.get(head) ?? 0;
+            const pref = this._codebook.getSafe(head, 0);
             const byte = tail;
 
             this._codebook.set(slice, code++);
