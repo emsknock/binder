@@ -12,11 +12,15 @@ export class FixedArray<T> {
     private _array: T[];
     private _size: number;
 
-    constructor(size: number, defaultValue?: T) {
+    constructor(size: number, defaultValue?: () => T | T) {
         if (size < 1)
             throw RangeError(`Array size must be at least 1: ${size}`);
+        if (typeof defaultValue === "function") {
+            this._array = Array.from({ length: size }, defaultValue);
+        } else {
+            this._array = Array(size).fill(defaultValue);
+        }
         this._size = size;
-        this._array = Array(size).fill(defaultValue);
     }
 
     private isInBounds = (i: number) => !(i < 0) && i < this._size;
