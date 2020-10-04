@@ -1,6 +1,8 @@
 import { ArrayList } from "structures/array-list";
 import { Dictionary } from "structures/dictionary";
 
+import { ByteList } from "types/byte-list";
+
 import { BufferReader } from "utils/buffer-reader";
 
 export class LzwCompressor {
@@ -25,13 +27,10 @@ export class LzwCompressor {
         do {
 
             const slice = reader.readUntil(s => !this._codebook.has(s));
-            const sCopy = slice.copy();
+            const sCopy: ByteList = slice.copy();
 
-            const tail = sCopy.popTail(); // The last char of string
-            const head = sCopy; // String without the last char
-
-            const pref = this._codebook.getSafe(head, 0);
-            const byte = tail;
+            const byte = sCopy.popTail();
+            const pref = this._codebook.getSafe(sCopy, 0);
 
             this._codebook.set(slice, code++);
 
