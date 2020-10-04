@@ -1,13 +1,14 @@
 import { ArrayList } from "structures/array-list";
+import { Dictionary } from "structures/dictionary";
+
 import { BufferReader } from "utils/buffer-reader";
-import { charToByte } from "utils/bytes-chars";
 
 export class LzwCompressor {
 
     /** A buffer object passed in the constructor */
     private readonly _inputBuffer: Buffer;
 
-    private _codebook = new Map<string, number>();
+    private _codebook = new Dictionary<number>();
 
     constructor(buffer: Buffer) {
         if (buffer.length < 1)
@@ -24,12 +25,13 @@ export class LzwCompressor {
         do {
 
             const slice = reader.readUntil(s => !this._codebook.has(s));
+            const sCopy = slice.copy();
 
-            const head = slice.slice(0, -1); // String without the last char
-            const tail = slice.slice(-1); // The last char of string
+            const tail = sCopy.popTail(); // The last char of string
+            const head = sCopy; // String without the last char
 
-            const pref = this._codebook.get(head) ?? 0;
-            const byte = charToByte(tail);
+            const pref = this._codebook.getSafe(head, 0);
+            const byte = tail;
 
             this._codebook.set(slice, code++);
 
