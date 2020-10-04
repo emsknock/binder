@@ -1,6 +1,6 @@
 import { FixedArray } from "structures/fixed-array";
 import { BufferReader } from "utils/buffer-reader";
-import { byteToChar } from "utils/bytes-chars";
+import { byteToChar, charToByte } from "utils/bytes-chars";
 
 export class LzwInflator {
 
@@ -39,7 +39,9 @@ export class LzwInflator {
 
         } while(reader.bytesLeft() > 0);
 
-        return rawOut;
+        const output = Buffer.alloc(rawOut.length);
+        [...rawOut].forEach((byte, idx) => output[idx] = charToByte(byte));
+        return output;
 
     }
 
