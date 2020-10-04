@@ -18,10 +18,10 @@ export class Dictionary<K extends Identifiable, V> {
     }
 
     public get(key: K) {
-        const value = this.getBucket(key).find(key);
-        if (!value)
+        const element = this.getBucket(key).find(key);
+        if (!element)
             throw Error(`No such key in dictionary: ${key.id}`);
-        return value;
+        return element.value;
     }
 
     public getSafe(key: K, defaultValue: V) {
