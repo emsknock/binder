@@ -77,4 +77,12 @@ export class FixedArray<T> {
         }
     }
 
+    public map<M>(fn: (value: T, index: number, array: this) => M) {
+        const out = new FixedArray<M>(this._size);
+        for (let i = 0; i < this._size; i++) {
+            out.set(i, fn(this.get(i), i, this));
+        }
+        return out;
+    }
+
 }
