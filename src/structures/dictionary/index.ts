@@ -5,7 +5,7 @@ import { Identifiable } from "types/identifiable";
 
 export class Dictionary<K extends Identifiable, V> {
 
-    private _buckets = new FixedArray<Bucket<K, V>>(256, () => new Bucket());
+    private _buckets = new FixedArray<Bucket<K, V>>(256).map(() => new Bucket());
 
     private getBucket = (key: K) => this._buckets.get(key.id % 256);
 
