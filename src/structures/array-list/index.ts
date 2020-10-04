@@ -1,13 +1,20 @@
 import { FixedArray } from "structures/fixed-array";
+import { Identifiable } from "types/identifiable";
 
-export class ArrayList<T> {
+export class ArrayList<T> implements Identifiable {
+
+    static ID = 0;
+    private readonly _id: number;
 
     private _array: FixedArray<T>;
     private _size = 0;
 
     constructor(initialSize = 256) {
+        this._id = ++ArrayList.ID;
         this._array = new FixedArray(initialSize);
     }
+
+    id = () => this._id;
 
     private isInBounds = (i: number) => !(i < 0) && i < this._size;
 
