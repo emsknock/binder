@@ -144,3 +144,16 @@ test("safe setter sets the specified element when in bounds", () => {
     expect(list.setSafe(0, 0)).toBeUndefined();
     expect(list.get(0)).toBe(0);
 });
+
+test("find returns the first that matches the predicate", () => {
+    const list = new ArrayList<number>(8);
+    [1, 2, 3, 4, 5, 6, 7, 8].forEach(n => list.add(n));
+    expect(list.find(n => n % 3 === 0)).toEqual(3);
+    expect(list.find(n => n % 2 === 0)).toEqual(2);
+});
+
+test("find returns undefined if predicate doesn't match", () => {
+    const list = new ArrayList<number>(8);
+    [1, 2, 3, 4, 5, 6, 7, 8].forEach(n => list.add(n));
+    expect(list.find(() => false)).toBeUndefined();
+});
