@@ -1,6 +1,6 @@
 import { HuffmanCompressor } from ".";
 
-it("counts byte frequencies correctly", () => {
+it("fills the frequency map with correct byte counts", () => {
     const h = new HuffmanCompressor(Buffer.from("DEADBEEF01010101", "hex"));
     h["fillFrequencyArray"]();
     expect(h["_frequencyMap"].get(0xde)).toBe(1);
@@ -11,7 +11,7 @@ it("counts byte frequencies correctly", () => {
     expect(h["_frequencyMap"].get(0x00)).toBe(0);
 });
 
-it("fills node queue correctly", () => {
+it("the node queue returns bytes in ascending order", () => {
     const h = new HuffmanCompressor(Buffer.from("DEADBEEF01010101", "hex"));
     h["fillFrequencyArray"]();
     h["fillNodeQueue"]();
@@ -23,7 +23,7 @@ it("fills node queue correctly", () => {
     expect(q.pop().byte).toBe(0x01);
 });
 
-it("creates huffman tree correctly", () => {
+it("creates a the Huffman tree as expected", () => {
     const h = new HuffmanCompressor(Buffer.from("DEADBEEF01010101", "hex"));
     h["fillFrequencyArray"]();
     h["fillNodeQueue"]();
@@ -35,7 +35,7 @@ it("creates huffman tree correctly", () => {
     expect(root.l!.r!.l!.byte).toBe(0xef);
 });
 
-it("fills encoding map correctly", () => {
+it("gives each byte an encoding as a bit string according to the path to them from the tree root", () => {
     const h = new HuffmanCompressor(Buffer.from("DEADBEEF01010101", "hex"));
     h["fillFrequencyArray"]();
     h["fillNodeQueue"]();

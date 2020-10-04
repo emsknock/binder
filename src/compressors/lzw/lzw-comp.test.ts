@@ -7,7 +7,7 @@ it("throws when given an empty buffer", () => {
     expect(() => $([])).toThrow();
 });
 
-it("compresses small example correctly", () => {
+it("compresses small example as expected with prefix-byte pairs", () => {
 
     // Example from the YouTube video "The Beauty of Lempel-Ziv Compression"
     // Published by "Art of the Problem" on 12. Dec. 2018,

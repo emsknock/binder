@@ -1,6 +1,6 @@
 import { PriorityQueue } from ".";
 
-test("size works", () => {
+test("size is reported correctly after adding and removing elements", () => {
     const maxQueue = new PriorityQueue(true);
     expect(maxQueue.size()).toBe(0);
     maxQueue.push("A", 1);

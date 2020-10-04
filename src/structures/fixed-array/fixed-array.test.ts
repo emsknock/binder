@@ -45,7 +45,7 @@ test("default value is set", () => {
         expect(arr.get(i)).toBe("test");
 });
 
-test("changeWithFn method works", () => {
+test("changeWithFn method changes elements like dictated by the second argument", () => {
     const arr = new FixedArray(50, 0);
     for (let i = 0; i < 50; i++)
         arr.changeWithFn(i, () => i);

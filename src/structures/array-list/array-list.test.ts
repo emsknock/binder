@@ -120,17 +120,27 @@ test("can't pop tail from empty list", () => {
     expect(() => (new ArrayList(1)).popTail()).toThrowError(ReferenceError);
 });
 
-test("safe getter works", () => {
+test("safe getter returns element at first parameter's index when in bounds", () => {
     const list = new ArrayList(1);
     list.add(1337);
     expect(list.getSafe(0, "NO")).toBe(1337);
+});
+
+test("safe getter returns second parameter when out of bounds", () => {
+    const list = new ArrayList(1);
+    list.add(1337);
     expect(list.getSafe(1, "NO")).toBe("NO");
 });
 
-test("safe setter works", () => {
+test("safe setter doesn't throw when setting out of bounds", () => {
     const list = new ArrayList(1);
     list.add(1337);
     expect(() => list.setSafe(5, 0)).not.toThrow();
+});
+
+test("safe setter sets the specified element when in bounds", () => {
+    const list = new ArrayList(1);
+    list.add(1337);
     expect(list.setSafe(0, 0)).toBeUndefined();
     expect(list.get(0)).toBe(0);
 });
