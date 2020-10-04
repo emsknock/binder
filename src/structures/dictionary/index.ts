@@ -10,7 +10,7 @@ export class Dictionary<V> {
     private getBucket = (key: ByteList) => this._buckets.get(key.size() % 256);
 
     public set(key: ByteList, value: V) {
-        this.getBucket(key).add(key, value);
+        this.getBucket(key).set(key, value);
     }
 
     public has(key: ByteList) {
