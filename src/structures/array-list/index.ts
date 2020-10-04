@@ -128,4 +128,14 @@ export class ArrayList<T> implements Identifiable {
         }
     }
 
+    /** Test each element with the given predicate and return the first element it return true for */
+    public find(predicate: (value: T, index: number, array: this) => boolean) {
+        for (let i = 0; i < this._size; i++) {
+            const value = this.get(i);
+            if (predicate(value, i, this)) {
+                return value;
+            }
+        }
+    }
+
 }
