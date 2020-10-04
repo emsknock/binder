@@ -13,6 +13,10 @@ export class Dictionary<K extends Identifiable, V> {
         this.getBucket(key).add(key, value);
     }
 
+    public has(key: K) {
+        return typeof this.getBucket(key).find(key) !== "undefined";
+    }
+
     public get(key: K) {
         const value = this.getBucket(key).find(key);
         if (!value)
