@@ -1,12 +1,13 @@
+import { FixedArray } from "structures/fixed-array";
 import { BufferReader } from "utils/buffer-reader";
-import { charToByte } from "utils/bytes-chars";
+import { byteToChar } from "utils/bytes-chars";
 
 export class LzwInflator {
 
     /** A buffer object passed in the constructor */
     private readonly _inputBuffer: Buffer;
 
-    private _codebook = new Map<number, string>();
+    private _codebook = new FixedArray<string>(256, "");
 
     constructor(buffer: Buffer) {
 
@@ -25,15 +26,13 @@ export class LzwInflator {
         let code = 1;
         do {
 
-            const slice = reader.readUntil(s => s.length === 2);
+            const slice = reader.readUntil(s => s.size() === 2);
 
-            const pref = slice.slice(0, 1);
-            const char = slice.slice(1, 2);
+            const char = slice.popTail();
+            const pref = slice.popTail();
 
-            const prefCode = charToByte(pref);
-
-            const head = this._codebook.has(prefCode) ? this._codebook.get(prefCode) : "";
-            const part = head + char;
+            const head = this._codebook.get(pref);
+            const part = head + byteToChar(char);
 
             rawOut += part;
             this._codebook.set(code++, part);
