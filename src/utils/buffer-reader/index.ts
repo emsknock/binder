@@ -1,3 +1,5 @@
+import { ArrayList } from "structures/array-list";
+
 /**
  * A utility to help with consuming buffer data.
  */
@@ -19,16 +21,17 @@ export class BufferReader {
      * **Resumes from where it left off the next time it's called.**  
      * @param predicate A function to test slices
      */
-    public readUntil = (predicate: (slice: string) => boolean) => {
+    public readUntil = (predicate: (slice: ArrayList<number>) => boolean) => {
 
-        let output = "";
+        const output = new ArrayList<number>();
+
         let offset = 0;
         do {
 
             const readIndex = this.readHeadPosition + offset;
             if (readIndex >= this.buffer.length) break;
             
-            output += String.fromCharCode(this.buffer.readUInt8(readIndex));
+            output.add(this.buffer.readUInt8(readIndex));
 
             offset++;
 
