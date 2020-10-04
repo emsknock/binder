@@ -1,12 +1,6 @@
 import { ArrayList } from "structures/array-list";
 import { Identifiable } from "types/identifiable";
 
-interface BucketNode<K extends Identifiable, V> {
-    key: K,
-    value: V,
-    next?: BucketNode<K, V>,
-}
-
 export class Bucket<K extends Identifiable, V> {
 
     private list = new ArrayList<{ key: K, value: V }>(2);
