@@ -141,4 +141,10 @@ export class ArrayList<T> {
         return true;
     }
 
+    public copy() {
+        const newList = new ArrayList<T>(this.size());
+        this.forEach(v => newList.add(v));
+        return newList;
+    }
+
 }
