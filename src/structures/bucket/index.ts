@@ -9,7 +9,7 @@ interface BucketNode<K extends Identifiable, V> {
 
 export class Bucket<K extends Identifiable, V> {
 
-    private list = new ArrayList<{ key: K, value: V }>();
+    private list = new ArrayList<{ key: K, value: V }>(2);
 
     public add = (key: K, value: V) => this.list.add({ key, value });
 
