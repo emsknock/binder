@@ -25,7 +25,7 @@ export class Dictionary<K extends Identifiable, V> {
     }
 
     public getSafe(key: K, defaultValue: V) {
-        return this.getBucket(key).find(key) ?? defaultValue;
+        return this.getBucket(key).find(key)?.value ?? defaultValue;
     }
 
 }
