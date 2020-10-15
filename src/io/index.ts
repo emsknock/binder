@@ -5,7 +5,7 @@ import { LzwInflator } from "../inflation/lzw";
 import { HuffmanCompressor } from "../compression/huffman";
 // import { HuffmanInflator } from "../inflation/huffman";
 
-export const process = async (dir: "compress" | "inflate", iPath: string, oPath: string) => {
+export const doProcessing = async (dir: "compress" | "inflate", iPath: string, oPath: string) => {
 
     const inputBuffer = await readFile(iPath);
 
@@ -25,5 +25,7 @@ export const process = async (dir: "compress" | "inflate", iPath: string, oPath:
     } else {
 
     }
+
+    return;
 
 }
