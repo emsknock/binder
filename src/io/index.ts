@@ -1,3 +1,4 @@
+import path from "path";
 import { readFile, writeFile } from "fs/promises";
 
 import { LzwCompressor } from "../compression/lzw";
@@ -7,7 +8,7 @@ import { HuffmanCompressor } from "../compression/huffman";
 
 export const doProcessing = async (dir: "compress" | "inflate", iPath: string, oPath: string) => {
 
-    const inputBuffer = await readFile(iPath);
+    const inputBuffer = await readFile(path.resolve(iPath));
 
     if (dir === "compress") {
 
@@ -20,7 +21,7 @@ export const doProcessing = async (dir: "compress" | "inflate", iPath: string, o
 
         const shorter = lzwResult.length < hufResult.length ? lzwResult : hufResult;
 
-        writeFile(oPath, shorter);
+        writeFile(path.resolve(oPath), shorter);
 
     } else {
 
@@ -28,4 +29,4 @@ export const doProcessing = async (dir: "compress" | "inflate", iPath: string, o
 
     return;
 
-}
+};
