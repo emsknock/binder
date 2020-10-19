@@ -1,7 +1,7 @@
 import yargs from "yargs";
 import { doProcessing } from "./io";
 
-const { argv } = yargs(doProcessing.argv.slice(2))
+const { argv } = yargs(process.argv.slice(2))
     .usage("Usage: $0 <compress|inflate> -i <path> -o <path>")
     .command("compress", "compress a file")
     .command("inflate", "inflate a file")
