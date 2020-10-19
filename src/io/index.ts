@@ -3,6 +3,7 @@ import { promises as fs } from "fs";
 
 import { LzwCompressor } from "../compression/lzw";
 import { HuffmanCompressor } from "../compression/huffman";
+import { LzwInflator } from "../inflation/lzw";
 
 export const doProcessing = async (dir: "compress" | "inflate", iPath: string, oPath: string) => {
 
@@ -20,6 +21,14 @@ export const doProcessing = async (dir: "compress" | "inflate", iPath: string, o
         const shorter = lzwResult.length < hufResult.length ? lzwResult : hufResult;
 
         fs.writeFile(path.resolve(oPath), shorter);
+
+    } else {
+
+        const lzw = new LzwInflator(inputBuffer);
+
+        const lzwResult = lzw.inflate();
+
+        fs.writeFile(path.resolve(oPath), lzwResult);
 
     }
 
