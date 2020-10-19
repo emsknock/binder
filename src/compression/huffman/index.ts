@@ -122,7 +122,7 @@ export class HuffmanCompressor {
 
         // Node Buffers will only hold at least octet sized elements,
         // so the bit list has to be divided into octets and then those octets written to the buffer.
-        const compressedData = Buffer.alloc(Math.floor(bitCount / 8));
+        const compressedData = Buffer.alloc(Math.ceil(bitCount / 8));
         for (let octetIdx = 0; octetIdx < bitList.size(); octetIdx += 8) {
             const offsetInCompressed = octetIdx / 8;
             const octet =
