@@ -16,6 +16,9 @@ interface HuffmanNode {
 
 }
 
+/** Represents a HuffmanNode in a flattened version of a Huffman tree */
+type EncodedTreeTuple = { isLeaf: false } | { isLeaf: true, byte: number };
+
 export class HuffmanCompressor {
 
     /** A buffer object passed in the constructor */
@@ -32,6 +35,9 @@ export class HuffmanCompressor {
 
     /** Maps bytes to their Huffman encodings (variable-sized strings of bits) */
     private _encodingMap = new FixedArray<string>(256, "");
+
+    /** A flattened out version of the Huffman tree that will be concatinated to the output */
+    private _treeEncoding = new ArrayList<EncodedTreeTuple>();
 
     constructor(buffer: Buffer) {
         if (buffer.length < 1)
@@ -67,15 +73,19 @@ export class HuffmanCompressor {
 
     }
     private fillEncodingMap = () => {
-        // A recursive function to build the variable-sized strings of bits for the encoding map
+        // A recursive function to build the variable-sized strings of bits for the encoding map,
+        // and to populate the treeEncoding list that represents a binary encoding of the
+        // Huffman tree in the "preamble" part of the compressed output.
         const traverse = (node: HuffmanNode, path: string) => {
             if (node.byte !== null) {
                 // Since the byte is not null, this is a leaf.
+                this._treeEncoding.add({ isLeaf: true, byte: node.byte });
                 this._encodingMap.set(node.byte, path);
             } else {
                 // Since the byte is null, this is not a leaf.
                 // Like noted in the HuffmanNode interface specification above,
                 // if a node is not a leaf, both of its children will always exist.
+                this._treeEncoding.add({ isLeaf: false });
                 if (node.l) traverse(node.l, path + "0");
                 if (node.r) traverse(node.r, path + "1");
             }
@@ -92,7 +102,7 @@ export class HuffmanCompressor {
         this.fillNodeQueue();
         this.fillHuffmanTree();
         this.fillEncodingMap();
-        
+
         // The amount of bits in the data portion of the compressed buffer
         const bitCount = this._inputBuffer.reduce(
             (accu, byte) => accu + this._encodingMap.get(byte).length,
@@ -126,6 +136,30 @@ export class HuffmanCompressor {
                 (bitList.getSafe(octetIdx + 7, 0));
             compressedData.writeUInt8(octet, offsetInCompressed);
         }
+
+        let preambleSize = 0;
+        this._treeEncoding.forEach(
+            (tuple) => {
+                preambleSize += tuple.isLeaf ? 2 : 1;
+            }
+        );
+
+        const preambleData = Buffer.alloc(preambleSize);
+        this._treeEncoding.forEach(
+            (tuple) => {
+                if (tuple.isLeaf) {
+                    preambleData.writeUInt8(1);
+                    preambleData.writeUInt8(tuple.byte);
+                } else {
+                    preambleData.writeUInt8(0);
+                }
+            }
+        );
+
+        // Array used with fixed size
+        const output = Buffer.concat([preambleData, compressedData]);
+
+        return output;
 
     }
 
