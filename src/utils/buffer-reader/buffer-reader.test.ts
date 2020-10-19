@@ -1,4 +1,4 @@
-import { ArrayList } from "structures/array-list";
+import { ArrayList } from "../../structures/array-list";
 import { BufferReader } from ".";
 
 const $ = (...arr: number[]) => new BufferReader(Buffer.from(arr));

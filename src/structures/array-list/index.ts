@@ -1,4 +1,4 @@
-import { FixedArray } from "structures/fixed-array";
+import { FixedArray } from "../fixed-array";
 
 export class ArrayList<T> {
 

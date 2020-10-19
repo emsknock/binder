@@ -1,6 +1,6 @@
-import { FixedArray } from "structures/fixed-array";
-import { BufferReader } from "utils/buffer-reader";
-import { byteToChar, charToByte } from "utils/bytes-chars";
+import { FixedArray } from "../../structures/fixed-array";
+import { BufferReader } from "../../utils/buffer-reader";
+import { byteToChar, charToByte } from "../../utils/bytes-chars";
 
 export class LzwInflator {
 

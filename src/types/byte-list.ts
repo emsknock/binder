@@ -1,3 +1,3 @@
-import { ArrayList } from "structures/array-list";
+import { ArrayList } from "../structures/array-list";
 
 export type ByteList = ArrayList<number>;

@@ -1,9 +1,9 @@
-import { ArrayList } from "structures/array-list";
-import { Dictionary } from "structures/dictionary";
+import { ArrayList } from "../../structures/array-list";
+import { Dictionary } from "../../structures/dictionary";
 
-import { ByteList } from "types/byte-list";
+import { ByteList } from "../../types/byte-list";
 
-import { BufferReader } from "utils/buffer-reader";
+import { BufferReader } from "../../utils/buffer-reader";
 
 export class LzwCompressor {
 

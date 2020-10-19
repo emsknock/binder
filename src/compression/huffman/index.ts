@@ -1,6 +1,6 @@
-import { ArrayList } from "structures/array-list";
-import { FixedArray } from "structures/fixed-array";
-import { PriorityQueue } from "structures/priority-queue";
+import { ArrayList } from "../../structures/array-list";
+import { FixedArray } from "../../structures/fixed-array";
+import { PriorityQueue } from "../../structures/priority-queue";
 
 interface HuffmanNode {
 

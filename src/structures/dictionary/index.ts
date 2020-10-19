@@ -1,7 +1,7 @@
-import { FixedArray } from "structures/fixed-array";
-import { Bucket } from "structures/bucket";
+import { FixedArray } from "../fixed-array";
+import { Bucket } from "../bucket";
 
-import { ByteList } from "types/byte-list";
+import { ByteList } from "../../types/byte-list";
 
 export class Dictionary<V> {
 

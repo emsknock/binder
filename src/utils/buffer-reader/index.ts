@@ -1,5 +1,5 @@
-import { ArrayList } from "structures/array-list";
-import { ByteList } from "types/byte-list";
+import { ArrayList } from "../../structures/array-list";
+import { ByteList } from "../../types/byte-list";
 
 /**
  * A utility to help with consuming buffer data.
