@@ -1,4 +1,4 @@
-import { FixedArray } from "../../structures/fixed-array";
+import { ArrayList } from "../../structures/array-list";
 import { BufferReader } from "../../utils/buffer-reader";
 import { byteToChar, charToByte } from "../../utils/bytes-chars";
 
@@ -7,7 +7,7 @@ export class LzwInflator {
     /** A buffer object passed in the constructor */
     private readonly _inputBuffer: Buffer;
 
-    private _codebook = new FixedArray<string>(256, "");
+    private _codebook = new ArrayList<string>();
 
     constructor(buffer: Buffer) {
 
@@ -15,6 +15,7 @@ export class LzwInflator {
             throw Error("Cannot inflate empty buffer");
 
         this._inputBuffer = buffer;
+        this._codebook.add("");
 
     }
 
@@ -23,7 +24,6 @@ export class LzwInflator {
         let rawOut = "";
         const reader = new BufferReader(this._inputBuffer);
 
-        let code = 1;
         do {
 
             const slice = reader.readUntil(s => s.size() === 2);
@@ -35,7 +35,7 @@ export class LzwInflator {
             const part = head + byteToChar(char);
 
             rawOut += part;
-            this._codebook.set(code++, part);
+            this._codebook.add(part);
 
         } while(reader.bytesLeft() > 0);
 
