@@ -7,7 +7,7 @@ export class LzwInflator {
     /** A buffer object passed in the constructor */
     private readonly _inputBuffer: Buffer;
 
-    private _codebook = new ArrayList<string>();
+    private _codebook = new ArrayList<ArrayList<number>>();
 
     constructor(buffer: Buffer) {
 
@@ -15,13 +15,13 @@ export class LzwInflator {
             throw Error("Cannot inflate empty buffer");
 
         this._inputBuffer = buffer;
-        this._codebook.add("");
+        this._codebook.add(new ArrayList(1));
 
     }
 
     inflate() {
 
-        let rawOut = "";
+        const rawOut = new ArrayList<number>();
         const reader = new BufferReader(this._inputBuffer);
 
         do {
@@ -31,16 +31,17 @@ export class LzwInflator {
             const char = slice.popTail();
             const pref = slice.popTail();
 
-            const head = this._codebook.get(pref);
-            const part = head + byteToChar(char);
+            const part = new ArrayList<number>();
+            part.concat(this._codebook.get(pref));
+            part.add(char);
 
-            rawOut += part;
+            rawOut.concat(part);
             this._codebook.add(part);
 
         } while(reader.bytesLeft() > 0);
 
-        const output = Buffer.alloc(rawOut.length);
-        [...rawOut].forEach((byte, idx) => output[idx] = charToByte(byte));
+        const output = Buffer.alloc(rawOut.size());
+        rawOut.forEach((byte, idx) => output[idx] = byte);
         return output;
 
     }
