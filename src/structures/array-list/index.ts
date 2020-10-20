@@ -146,7 +146,7 @@ export class ArrayList<T> {
     }
 
     public copy() {
-        const newList = new ArrayList<T>(this.size());
+        const newList = new ArrayList<T>(this.size() === 0 ? 1 : this.size());
         this.forEach(v => newList.add(v));
         return newList;
     }
