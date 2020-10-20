@@ -1,5 +1,6 @@
 import { ArrayList } from "../array-list";
-import { ByteList } from "../../types/byte-list";
+
+type ByteList = ArrayList<number>;
 
 export class Bucket<V> {
 

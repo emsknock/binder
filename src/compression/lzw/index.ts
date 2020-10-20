@@ -1,8 +1,6 @@
 import { ArrayList } from "../../structures/array-list";
 import { Dictionary } from "../../structures/dictionary";
 
-import { ByteList } from "../../types/byte-list";
-
 import { BufferReader } from "../../utils/buffer-reader";
 
 export class LzwCompressor {
@@ -27,7 +25,7 @@ export class LzwCompressor {
         do {
 
             const slice = reader.readUntil(s => !this._codebook.has(s));
-            const sCopy: ByteList = slice.copy();
+            const sCopy = slice.copy();
 
             const byte = sCopy.popTail();
             const pref = this._codebook.getSafe(sCopy, 0);

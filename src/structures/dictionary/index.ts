@@ -1,7 +1,8 @@
 import { FixedArray } from "../fixed-array";
+import { ArrayList } from "../array-list";
 import { Bucket } from "../bucket";
 
-import { ByteList } from "../../types/byte-list";
+type ByteList = ArrayList<number>;
 
 export class Dictionary<V> {
 

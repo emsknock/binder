@@ -1,5 +1,4 @@
 import { ArrayList } from "../../structures/array-list";
-import { ByteList } from "../../types/byte-list";
 
 /**
  * A utility to help with consuming buffer data.
@@ -22,7 +21,7 @@ export class BufferReader {
      * **Resumes from where it left off the next time it's called.**  
      * @param predicate A function to test slices
      */
-    public readUntil = (predicate: (slice: ArrayList<number>) => boolean): ByteList => {
+    public readUntil = (predicate: (slice: ArrayList<number>) => boolean) => {
 
         const output = new ArrayList<number>();
 

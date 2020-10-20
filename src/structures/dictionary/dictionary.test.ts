@@ -1,8 +1,7 @@
 import { ArrayList } from "../../structures/array-list";
-import { ByteList } from "../../types/byte-list";
 import { Dictionary } from ".";
 
-const list = (...a: number[]): ByteList => {
+const list = (...a: number[]): ArrayList<number> => {
     const l = new ArrayList<number>();
     a.forEach(n => l.add(n));
     return l;
