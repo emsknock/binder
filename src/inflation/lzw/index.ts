@@ -25,7 +25,7 @@ export class LzwInflator {
 
         do {
 
-            const slice = reader.readUntil(s => s.size() === 2);
+            const slice = reader.readBytesUntil(s => s.size() === 2);
 
             const char = slice.popTail();
             const pref = slice.popTail();

@@ -24,7 +24,7 @@ export class LzwCompressor {
         let code = 1;
         do {
 
-            const slice = reader.readUntil(s => !this._codebook.has(s));
+            const slice = reader.readBytesUntil(s => !this._codebook.has(s));
             const sCopy = slice.copy();
 
             const byte = sCopy.popTail();
