@@ -147,4 +147,8 @@ export class ArrayList<T> {
         return newList;
     }
 
+    public concat(list: ArrayList<T>) {
+        list.forEach(t => this.add(t));
+    }
+
 }
