@@ -85,9 +85,9 @@ export class HuffmanCompressor {
                 // Since the byte is null, this is not a leaf.
                 // Like noted in the HuffmanNode interface specification above,
                 // if a node is not a leaf, both of its children will always exist.
+                traverse(node.l!, path + "0");
+                traverse(node.r!, path + "1");
                 this._treeEncoding.add({ isLeaf: false });
-                if (node.l) traverse(node.l, path + "0");
-                if (node.r) traverse(node.r, path + "1");
             }
         };
         traverse(this._root, "");
@@ -137,29 +137,23 @@ export class HuffmanCompressor {
             compressedData.writeUInt8(octet, offsetInCompressed);
         }
 
-        let preambleSize = 0;
-        this._treeEncoding.forEach(
-            (tuple) => {
-                preambleSize += tuple.isLeaf ? 2 : 1;
-            }
-        );
-
+        const preambleSize = this._treeEncoding.size() * 2;
         const preambleData = Buffer.alloc(preambleSize);
-        this._treeEncoding.forEach(
-            (tuple) => {
-                if (tuple.isLeaf) {
-                    preambleData.writeUInt8(1);
-                    preambleData.writeUInt8(tuple.byte);
-                } else {
-                    preambleData.writeUInt8(0);
-                }
+        this._treeEncoding.forEach((tuple, idx) => {
+            if(tuple.isLeaf) {
+                preambleData[idx * 2 + 0] = 1;
+                preambleData[idx * 2 + 1] = tuple.byte;
+            } else {
+                preambleData[idx * 2 + 0] = 0;
+                preambleData[idx * 2 + 1] = 0;
             }
+        });
+
+        this._frequencyMap.forEach(
+            (freq, byte) => freq > 0 && console.log(JSON.stringify(String.fromCharCode(byte)), this._encodingMap.get(byte))
         );
 
-        // Array used with fixed size
-        const output = Buffer.concat([preambleData, compressedData]);
-
-        return output;
+        return Buffer.concat([Buffer.from([preambleSize]), preambleData, compressedData]);
 
     }
 
