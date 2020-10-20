@@ -1,6 +1,5 @@
 import { ArrayList } from "../../structures/array-list";
 import { BufferReader } from "../../utils/buffer-reader";
-import { byteToChar, charToByte } from "../../utils/bytes-chars";
 
 export class LzwInflator {
 
