@@ -78,6 +78,8 @@ export class ArrayList<T> {
         this._array.set(newIdx, v);
         this._size++;
 
+        return this;
+
     }
 
     /** Remove an element from the list by index */
@@ -91,6 +93,8 @@ export class ArrayList<T> {
             this._array.set(j - 1, this._array.get(j));
 
         this._size--;
+
+        return this;
 
     }
 
