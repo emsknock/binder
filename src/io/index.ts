@@ -24,7 +24,11 @@ export const doProcessing = async (args: Argv) => {
         } else {
             const hufResult = new HuffmanCompressor(inputBuffer).compress();
             const lzwResult = new LzwCompressor(inputBuffer).compress();
-            result = hufResult.length < lzwResult.length
+            console.log(`Huffman (bytes): ${hufResult.length}`);
+            console.log(`LZW (bytes):     ${lzwResult.length}`);
+            const isHufShorter = hufResult.length < lzwResult.length;
+            console.log(`Using ${isHufShorter ? "Huffman" : "LZW"} to compress`);
+            result = isHufShorter
                 ? hufResult
                 : lzwResult;
         }
