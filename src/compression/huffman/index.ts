@@ -149,10 +149,6 @@ export class HuffmanCompressor {
             }
         });
 
-        this._frequencyMap.forEach(
-            (freq, byte) => freq > 0 && console.log(JSON.stringify(String.fromCharCode(byte)), this._encodingMap.get(byte))
-        );
-
         return Buffer.concat([Buffer.from([preambleSize]), preambleData, compressedData]);
 
     }
