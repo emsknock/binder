@@ -17,10 +17,12 @@ export const doProcessing = async (args: Argv) => {
     let result: Buffer;
     if (dir === "compress") {
         if (huf || lzw) {
+            console.log(`Forced ${huf ? "Huffman" : "LZW"} to compress`);
             const algo = huf
                 ? new HuffmanCompressor(inputBuffer)
                 : new LzwCompressor(inputBuffer);
             result = algo.compress();
+            console.log(`Result size (bytes): ${result.length}`);
         } else {
             const hufResult = new HuffmanCompressor(inputBuffer).compress();
             const lzwResult = new LzwCompressor(inputBuffer).compress();
@@ -34,6 +36,7 @@ export const doProcessing = async (args: Argv) => {
         }
     } else {
         if (huf || lzw) {
+            console.log(`Forced ${huf ? "Huffman" : "LZW"} to inflate`);
             const algo = huf
                 ? new HuffmanInflator(inputBuffer)
                 : new LzwInflator(inputBuffer);
@@ -44,6 +47,7 @@ export const doProcessing = async (args: Argv) => {
         }
     }
 
+    console.log("Writing");
     fs.writeFile(path.resolve(o), result);
 
     return;
