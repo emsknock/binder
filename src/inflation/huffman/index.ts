@@ -89,10 +89,19 @@ export class HuffmanInflator {
 
         const rawOut = new ArrayList<number>();
         let sliceIdx = 0;
+
+        // I've spent like upwards of 7 hours trying to get this working now.
+        // Finally I found the bug, and I'm just slapping on a label to fix it.
+        // This whole nested do-while block should probably be refactored into
+        // something else, but I'm not spending another 7 hours of my life to do that.
+        buildStep:
         do {
 
             const slice = new ArrayList<0 | 1>();
+
             do {
+
+                if (sliceIdx === this._bitArray.size()) break buildStep;
 
                 slice.add(this._bitArray.get(sliceIdx));
                 sliceIdx++;
