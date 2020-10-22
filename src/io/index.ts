@@ -1,36 +1,46 @@
 import path from "path";
 import { promises as fs } from "fs";
+import { Argv } from "../main";
 
 import { LzwCompressor } from "../compression/lzw";
 import { HuffmanCompressor } from "../compression/huffman";
 import { LzwInflator } from "../inflation/lzw";
+import { HuffmanInflator } from "../inflation/huffman";
 
-export const doProcessing = async (dir: "compress" | "inflate", iPath: string, oPath: string) => {
+export const doProcessing = async (args: Argv) => {
 
-    const inputBuffer = await fs.readFile(path.resolve(iPath));
+    const { i, o, huf, lzw } = args;
+    const [dir] = args._;
 
+    const inputBuffer = await fs.readFile(path.resolve(i));
+
+    let result: Buffer;
     if (dir === "compress") {
-
-        const huf = new HuffmanCompressor(inputBuffer);
-        const lzw = new LzwCompressor(inputBuffer);
-
-        // Might use worker processes to do these in parallel in the future
-        const hufResult = huf.compress();
-        const lzwResult = lzw.compress();
-
-        const shorter = lzwResult.length < hufResult.length ? lzwResult : hufResult;
-
-        fs.writeFile(path.resolve(oPath), shorter);
-
+        if (huf || lzw) {
+            const algo = huf
+                ? new HuffmanCompressor(inputBuffer)
+                : new LzwCompressor(inputBuffer);
+            result = algo.compress();
+        } else {
+            const hufResult = new HuffmanCompressor(inputBuffer).compress();
+            const lzwResult = new LzwCompressor(inputBuffer).compress();
+            result = hufResult.length < lzwResult.length
+                ? hufResult
+                : lzwResult;
+        }
     } else {
-
-        const lzw = new LzwInflator(inputBuffer);
-
-        const lzwResult = lzw.inflate();
-
-        fs.writeFile(path.resolve(oPath), lzwResult);
-
+        if (huf || lzw) {
+            const algo = huf
+                ? new HuffmanInflator(inputBuffer)
+                : new LzwInflator(inputBuffer);
+            result = algo.inflate();
+        } else {
+            console.error("Must specify inflator algorithm");
+            process.exit(1);
+        }
     }
+
+    fs.writeFile(path.resolve(o), result);
 
     return;
 

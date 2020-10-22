@@ -8,18 +8,21 @@ const { argv } = yargs(process.argv.slice(2))
     .demandCommand(1, "Must call either compress or inflate")
     .options({
         i: { type: "string", demandOption: true, describe: "input file" },
-        o: { type: "string", demandOption: true, describe: "output file" }
+        o: { type: "string", demandOption: true, describe: "output file" },
+        huf: { type: "boolean", describe: "force huffman" },
+        lzw: { type: "boolean", describe: "force lzw" },
     });
 
-const { i, o } = argv;
 const [command] = argv._;
 
 switch (command) {
     case "compress":
     case "inflate":
-        doProcessing(command, i, o);
+        doProcessing(argv);
         break;
     default:
         console.error(`Unrecognised command: ${command}, only "compress" or "inflate" allowed`);
         process.exit(1);
 }
+
+export type Argv = typeof argv;
