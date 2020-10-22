@@ -158,6 +158,14 @@ test("find returns undefined if predicate doesn't match", () => {
     expect(list.find(() => false)).toBeUndefined();
 });
 
+test("isEqual returns false when parameters are uneven length", () => {
+    const list1 = new ArrayList<number>(8);
+    [1, 2, 3, 4, 5, 6, 7].forEach(n => list1.add(n));
+    const list2 = new ArrayList<number>(8);
+    [1, 2, 3, 4, 5, 6, 7, 9].forEach(n => list2.add(n));
+    expect(list1.isEqual(list2)).toBe(false);
+});
+
 test("isEqual returns true when the parameter matches", () => {
     const list1 = new ArrayList<number>(8);
     [1, 2, 3, 4, 5, 6, 7, 8].forEach(n => list1.add(n));
@@ -172,4 +180,13 @@ test("isEqual returns false when the parameter doesn't match", () => {
     const list2 = new ArrayList<number>(8);
     [1, 2, 3, 4, 5, 6, 7, 9].forEach(n => list2.add(n));
     expect(list1.isEqual(list2)).toBe(false);
+});
+
+test("array list copy has exactly the same elements", () => {
+    const list1 = new ArrayList<number>(8);
+    [1, 2, 3, 4, 5, 6, 7, 8].forEach(n => list1.add(n));
+    const list2 = list1.copy();
+    [1, 2, 3, 4, 5, 6, 7, 8].forEach(
+        (n, idx) => expect(list2.get(idx)).toEqual(n)
+    );
 });

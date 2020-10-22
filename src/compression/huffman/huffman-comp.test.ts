@@ -48,3 +48,15 @@ it("gives each byte an encoding as a bit string according to the path to them fr
     expect(map.get(0xbe)).toBe("000");
     expect(map.get(0xef)).toBe("010");
 });
+
+it("compresses a small example correctly", () => {
+    // Huffman actually does the opposite of compression here, but oh well
+    const h = new HuffmanCompressor(Buffer.from("48657920746865726521", "hex"));
+    expect(h.compress()).toEqual(
+        Buffer.from("1E0179017400000148012000000000017201680121000000000165000000005866B9D8", "hex")
+    );
+});
+
+it("refuses to compress empty buffer", () => {
+    expect(() => new HuffmanCompressor(Buffer.alloc(0))).toThrow();
+});

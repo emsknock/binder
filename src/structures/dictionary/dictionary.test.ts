@@ -35,3 +35,8 @@ test("can overwrite values", () => {
     d.set(k, 10);
     expect(d.get(k)).toBe(10);
 });
+
+test("throw when getting a key that doesn't exist", () => {
+    const d = new Dictionary<number>();
+    expect(() => d.get(list(5, 6, 6, 7))).toThrow();
+});

@@ -9,3 +9,10 @@ it("inflates small example from compressor test to its original form", () => {
     expect(i.inflate()).toEqual(orig);
 
 });
+
+it("throws when given an empty buffer", () => {
+
+    const b = Buffer.alloc(0);
+    expect(() => new LzwInflator(b)).toThrow();
+
+});
