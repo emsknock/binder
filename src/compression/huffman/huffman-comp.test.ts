@@ -37,10 +37,11 @@ it("creates a the Huffman tree as expected", () => {
 });
 
 it("gives each byte an encoding as a bit string according to the path to them from the tree root", () => {
-    const l = (...nums: number[]) => {
-        const o = new ArrayList();
+    const getArr = (l: ArrayList<number>) => l["_array"]["_array"].filter(n => typeof n !== "undefined");
+    const toList = (...nums: number[]) => {
+        const o = new ArrayList<number>();
         nums.forEach(n => o.add(n));
-        return o;
+        return getArr(o);
     };
     const h = new HuffmanCompressor(Buffer.from("DEADBEEF01010101", "hex"));
     h["fillFrequencyArray"]();
@@ -48,11 +49,11 @@ it("gives each byte an encoding as a bit string according to the path to them fr
     h["fillHuffmanTree"]();
     h["fillEncodingMap"]();
     const map = h["_encodingMap"];
-    expect(map.get(0x01)).toBe(l(1));
-    expect(map.get(0xde)).toBe(l(0,1,1));
-    expect(map.get(0xad)).toBe(l(0,0,1));
-    expect(map.get(0xbe)).toBe(l(0,0,0));
-    expect(map.get(0xef)).toBe(l(0,1,0));
+    expect(getArr(map.get(0x01))).toEqual(toList(1));
+    expect(getArr(map.get(0xde))).toEqual(toList(0,1,1));
+    expect(getArr(map.get(0xad))).toEqual(toList(0,0,1));
+    expect(getArr(map.get(0xbe))).toEqual(toList(0,0,0));
+    expect(getArr(map.get(0xef))).toEqual(toList(0,1,0));
 });
 
 it("compresses a small example correctly", () => {
