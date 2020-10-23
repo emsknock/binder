@@ -34,7 +34,7 @@ export class HuffmanCompressor {
     private _root: HuffmanNode = { freq: 0, byte: null };
 
     /** Maps bytes to their Huffman encodings (variable-sized strings of bits) */
-    private _encodingMap = new FixedArray<string>(256, "");
+    private _encodingMap = new FixedArray<ArrayList<number>>(256);
 
     /** A flattened out version of the Huffman tree that will be concatinated to the output */
     private _treeEncoding = new ArrayList<EncodedTreeTuple>();
@@ -76,7 +76,7 @@ export class HuffmanCompressor {
         // A recursive function to build the variable-sized strings of bits for the encoding map,
         // and to populate the treeEncoding list that represents a binary encoding of the
         // Huffman tree in the "preamble" part of the compressed output.
-        const traverse = (node: HuffmanNode, path: string) => {
+        const traverse = (node: HuffmanNode, path: ArrayList<number>) => {
             if (node.byte !== null) {
                 // Since the byte is not null, this is a leaf.
                 this._treeEncoding.add({ isLeaf: true, byte: node.byte });
@@ -85,12 +85,12 @@ export class HuffmanCompressor {
                 // Since the byte is null, this is not a leaf.
                 // Like noted in the HuffmanNode interface specification above,
                 // if a node is not a leaf, both of its children will always exist.
-                traverse(node.l!, path + "0");
-                traverse(node.r!, path + "1");
+                traverse(node.l!, path.copy().add(0));
+                traverse(node.r!, path.copy().add(1));
                 this._treeEncoding.add({ isLeaf: false });
             }
         };
-        traverse(this._root, "");
+        traverse(this._root, new ArrayList());
     }
 
     public compress() {
@@ -105,7 +105,7 @@ export class HuffmanCompressor {
 
         // The amount of bits in the data portion of the compressed buffer
         const bitCount = this._inputBuffer.reduce(
-            (accu, byte) => accu + this._encodingMap.get(byte).length,
+            (accu, byte) => accu + (this._encodingMap.get(byte)?.size() ?? 0),
             0
         );
 
@@ -114,10 +114,11 @@ export class HuffmanCompressor {
         // It's temporarily held as an array of bits, but turned into a buffer in the next step.
         const bitList = new ArrayList<number>(bitCount);
         for (const byte of this._inputBuffer) {
+            
             const bitString = this._encodingMap.get(byte);
-            for (const bitChar of bitString) {
-                bitList.add(bitChar === "0" ? 0 : 1);
-            }
+            
+            bitString?.forEach(bit => bitList.add(bit));
+
         }
 
         // Node Buffers will only hold at least octet sized elements,
