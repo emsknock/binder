@@ -1,4 +1,5 @@
 import { HuffmanCompressor } from ".";
+import { ArrayList } from "../../structures/array-list";
 
 it("fills the frequency map with correct byte counts", () => {
     const h = new HuffmanCompressor(Buffer.from("DEADBEEF01010101", "hex"));
@@ -36,17 +37,22 @@ it("creates a the Huffman tree as expected", () => {
 });
 
 it("gives each byte an encoding as a bit string according to the path to them from the tree root", () => {
+    const l = (...nums: number[]) => {
+        const o = new ArrayList();
+        nums.forEach(n => o.add(n));
+        return o;
+    };
     const h = new HuffmanCompressor(Buffer.from("DEADBEEF01010101", "hex"));
     h["fillFrequencyArray"]();
     h["fillNodeQueue"]();
     h["fillHuffmanTree"]();
     h["fillEncodingMap"]();
     const map = h["_encodingMap"];
-    expect(map.get(0x01)).toBe("1");
-    expect(map.get(0xde)).toBe("011");
-    expect(map.get(0xad)).toBe("001");
-    expect(map.get(0xbe)).toBe("000");
-    expect(map.get(0xef)).toBe("010");
+    expect(map.get(0x01)).toBe(l(1));
+    expect(map.get(0xde)).toBe(l(0,1,1));
+    expect(map.get(0xad)).toBe(l(0,0,1));
+    expect(map.get(0xbe)).toBe(l(0,0,0));
+    expect(map.get(0xef)).toBe(l(0,1,0));
 });
 
 it("compresses a small example correctly", () => {
