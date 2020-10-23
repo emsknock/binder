@@ -1,6 +1,5 @@
 import { ArrayList } from "../../structures/array-list";
 import { Dictionary } from "../../structures/dictionary";
-import { FixedArray } from "../../structures/fixed-array";
 import { BufferReader } from "../../utils/buffer-reader";
 
 interface HuffmanNode {
