@@ -20,16 +20,15 @@ $ npm test -- --coverage
 File                       | % Stmts   | % Branch  | % Funcs   | % Lines   | Uncovered Line #s 
 ---------------------------|-----------|-----------|-----------|-----------|-------------------
 All files                  | **92.81** | **88.43** | **97.22** | **92.52** |                   
- compressors/huffman       |   64.71   |   58.33   |   81.82   |   62.22   | 38,91-127         
- compressors/lzw           |     100   |     100   |     100   |     100   |                   
- inflators/lzw             |   95.83   |      50   |     100   |   95.45   | 15                
- structures/array-list     |   98.61   |   96.77   |     100   |     100   | 137               
+ compression/huffman       |     100   |      85   |     100   |     100   |                   
+ compression/lzw           |     100   |      85   |     100   |     100   | 108-120           
+ inflation/lzw             |     100   |     100   |     100   |     100   |                   
+ structures/array-list     |     100   |     100   |     100   |     100   |                   
  structures/bucket         |     100   |     100   |     100   |     100   |                   
- structures/dictionary     |   92.86   |      90   |     100   |   91.67   | 23                
+ structures/dictionary     |     100   |     100   |     100   |     100   |                   
  structures/fixed-array    |     100   |     100   |     100   |     100   |                   
  structures/priority-queue |   98.15   |      88   |     100   |     100   | 24,74,116,128     
  utils/buffer-reader       |     100   |     100   |     100   |     100   |                   
- utils/bytes-chars         |      75   |     100   |      50   |     100   |                   
 
 ## Performance
 
