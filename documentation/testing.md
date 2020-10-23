@@ -36,4 +36,3 @@ All files                  | **92.81** | **88.43** | **97.22** | **92.52** |
 The main performance indicators for the program will be its speed and the compression ratio.
 I'm planning on comparing the program to other compression utilities, probably 7Zip, WinRAR and GZip.
 The compression ratio evaluation will be done manually, and the speed can be measured with Node's console.time.
-The timer will be implemented at a later point in time, and will be activated with a command line argument.

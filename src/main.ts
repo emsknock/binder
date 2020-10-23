@@ -11,6 +11,7 @@ const { argv } = yargs(process.argv.slice(2))
         o: { type: "string", demandOption: true, describe: "output file" },
         huf: { type: "boolean", describe: "force huffman" },
         lzw: { type: "boolean", describe: "force lzw" },
+        timed: { type: "boolean", describe: "measure and print time taken" }
     });
 
 const [command] = argv._;
