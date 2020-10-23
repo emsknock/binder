@@ -1,5 +1,8 @@
 # Testing
 
+All the data structures have their own unit tests, all located next to each individual module's index file.  
+The algorithms have their own similar tests, save for the huffman inflator.
+
 ## Running the tests
 
 Install the package:
