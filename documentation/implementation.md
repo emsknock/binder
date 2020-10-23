@@ -21,5 +21,23 @@ The testing library used is Jest: the unit tests are named as `<module-name>.tes
         * [/buffer-reader](../src/utils/buffer-reader) — Helps with consuming NodeJS Buffers by keeping an internal movable "read head" on the buffer
 
 ## Time and space complexities
+Array list:
+    * `.has(i: number)`: O(1) — Simply checks whether the argument is in bounds of the list
+    * `.get(i: number)`: O(1) — A table lookup
+    * `.set(i: number)`: O(1) — A table write
+    * `.add(i: number)`: O(n) — Might have to allocate a new array if the current one is too small
+    * `.remove(i: number)`: O(1) — Simply decrements the internal tail pointer
+    * `.swapByIndex(aIdx: number, bIdx: number)`: O(1) — Sequential table lookups and writes
+    * `.forEach(fn: function)`: O(n) — Function called once with each element
+    * `.find(predicate: function)`: O(n) — Function called for each element or until predicate matches
+    * `.isEqual(to: ArrayList)`: O(n) — All elements have to be checked
+    * `.copy()`: O(n) — All elements have to be copied
+    * `.concat()`: O(n * m) — All elements have to be copied and new arrays might have to be allocated
+Priority queue:
+    * `.push(v: T, priority: number)`: O(log n) — Standard priority queue insert when using a heap
+    * `.pop()`: O(log n) — Standard priority queue removal when using a heap
+Dictionary / Bucket:
+    * `.set(key: ByteList, value: V)`: O(n) — Table lookup followed by a bucket's `ArrayList.find` followed by either `ArrayList.set` or `ArrayList.add`.
+    * `.get(key: ByteList)`: O(n) — Table lookup followed by a bucket's `ArrayList.find`
 
 ## Flaws and improvements
