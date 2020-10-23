@@ -33,6 +33,18 @@ All files                  | **92.81** | **88.43** | **97.22** | **92.52** |
 
 ## Performance
 
-The main performance indicators for the program will be its speed and the compression ratio.
-I'm planning on comparing the program to other compression utilities, probably 7Zip, WinRAR and GZip.
-The compression ratio evaluation will be done manually, and the speed can be measured with Node's console.time.
+The LZW implementation is apparently **so** unoptimised that the program will hang with files that are larger than 1kb (depending on their entropy).
+
+This project's README | Size (bytes) | Size (%) | Time taken to compress | Time to inflate        |
+----------------------|--------------|----------|------------------------|------------------------|
+Original file         | 631          | —        | —                      | —                      |
+Huffman               | 607          | 96.1     | 13 ms                  | 1 ms                   |
+LZW                   | 510          | 80.8     | 16 ms                  | 0.3 ms                 |
+MacOS's Zip           | 474          | 75.1     | 105 ms (whole program) | 119 ms (whole program) |
+
+The Huffman implementation runs pretty smoothly, however:
+
+The King James Bible | Size (bytes) | Size (%) | Time taken to compress | Time to inflate |
+---------------------|--------------|----------|------------------------|-----------------|
+Original file        | 4 332 499    | —        | —                      | —               |
+Huffman              | 2 480 633    | 57.2     | 1501 ms                | 110 ms          |
