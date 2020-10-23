@@ -41,3 +41,6 @@ Dictionary / Bucket: O(n) space
     * `.get(key: ByteList)`: O(n) — Table lookup followed by a bucket's `ArrayList.find`
 
 ## Flaws and improvements
+The Huffman coding wastes space by encoding the Huffman tree as a flattened-out version of the original tree and not as a canonical Huffman tree. Leaf bytes are preceded by a "1" and internal nodes are marked as "0"s. Additional space is wasted by storing these values as whole bytes and not bits — I simply didn't have the time to start implementing a `.readBit()` -method to the BufferReader class.
+
+The LZW algorithm also wastes space by encoding whole bytes, even the original data doesn't use the whole range of 0–255.
