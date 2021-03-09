@@ -21,7 +21,7 @@ The testing library used is Jest: the unit tests are named as `<module-name>.tes
         * [/buffer-reader](../src/utils/buffer-reader) — Helps with consuming NodeJS Buffers by keeping an internal movable "read head" on the buffer
 
 ## Time and space complexities
-Array list: O(n) space
+* Array list: O(n) space
     * `.has(i: number)`: O(1) — Simply checks whether the argument is in bounds of the list
     * `.get(i: number)`: O(1) — A table lookup
     * `.set(i: number)`: O(1) — A table write
@@ -33,10 +33,10 @@ Array list: O(n) space
     * `.isEqual(to: ArrayList)`: O(n) — All elements have to be checked
     * `.copy()`: O(n) — All elements have to be copied
     * `.concat()`: O(n * m) — All elements have to be copied and new arrays might have to be allocated
-Priority queue: O(n) space
+* Priority queue: O(n) space
     * `.push(v: T, priority: number)`: O(log n) — Standard priority queue insert when using a heap
     * `.pop()`: O(log n) — Standard priority queue removal when using a heap
-Dictionary / Bucket: O(n) space
+* Dictionary / Bucket: O(n) space
     * `.set(key: ByteList, value: V)`: O(n) — Table lookup followed by a bucket's `ArrayList.find` followed by either `ArrayList.set` or `ArrayList.add`.
     * `.get(key: ByteList)`: O(n) — Table lookup followed by a bucket's `ArrayList.find`
 
